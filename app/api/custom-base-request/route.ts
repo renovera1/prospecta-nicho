@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { builderSchema } from "@/lib/editor-schema";
+import { persistLead, sendTransactionalEmail, writeAuditLog } from "@/lib/server/integrations";
+import { hasHoneypot, rateLimit, sanitizePhone, sanitizeText, verifyTurnstileIfConfigured } from "@/lib/server/security";
 
 const legacySchema = z.object({
   name: z.string().min(2),
@@ -16,21 +18,63 @@ const legacySchema = z.object({
   notes: z.string().optional(),
   consent: z.literal(true),
   companySite: z.string().max(0).optional(),
+  turnstileToken: z.string().optional(),
 });
 
 export async function POST(request: Request) {
-  const body = await request.json();
+  const limited = rateLimit(request, "custom-base", 6, 60_000);
+  if (limited) return limited;
+
+  const body = (await request.json()) as Record<string, unknown>;
+  if (hasHoneypot(body)) return NextResponse.json({ ok: true, message: "Solicitação recebida." });
+
   const parsed = builderSchema.safeParse(body);
   const legacy = legacySchema.safeParse(body);
 
-  if ((!parsed.success && !legacy.success) || body.companySite) {
-    return NextResponse.json({ ok: false, message: "Dados invalidos." }, { status: 400 });
+  if (!parsed.success && !legacy.success) {
+    return NextResponse.json({ ok: false, message: "Dados inválidos." }, { status: 400 });
   }
+
+  const turnstileToken = (parsed.success ? parsed.data.turnstileToken : legacy.success ? legacy.data.turnstileToken : undefined);
+  const turnstileOk = await verifyTurnstileIfConfigured(request, turnstileToken);
+  if (!turnstileOk) {
+    return NextResponse.json({ ok: false, message: "Falha na verificação de segurança." }, { status: 403 });
+  }
+
+  const source = parsed.success ? "base-builder" : "custom-base-form";
+  const data = parsed.success ? parsed.data : legacy.data;
+  if (!data) {
+    return NextResponse.json({ ok: false, message: "Dados inválidos." }, { status: 400 });
+  }
+  const payload = {
+    source,
+    name: sanitizeText(data.name, 120),
+    email: sanitizeText(data.email, 180),
+    whatsapp: sanitizePhone(data.whatsapp),
+    company: sanitizeText("company" in data ? data.company : "", 160),
+    city: sanitizeText(data.city, 160),
+    segment: sanitizeText("segment" in data ? data.segment : data.niche, 160),
+    objective: sanitizeText(data.goal, 240),
+    filters: parsed.success ? data : undefined,
+    status: "analysis",
+    createdAt: new Date().toISOString(),
+  };
+
+  const persistence = await persistLead("custom_requests", payload);
+  const internalEmail = await sendTransactionalEmail("custom_request_internal", payload);
+  const confirmationEmail = await sendTransactionalEmail("custom_request_confirmation", payload);
+  await writeAuditLog("custom_request_submitted", { id: persistence.id, source, email: payload.email });
 
   return NextResponse.json({
     ok: true,
-    leadSource: parsed.success ? "base-builder" : "custom-base-form",
-    message:
-      "Solicitacao recebida. Integre RESEND_API_KEY e Supabase para persistir, notificar e enviar confirmacao.",
+    id: persistence.id,
+    leadSource: source,
+    status: "analysis",
+    message: "Solicitação recebida. A equipe valida filtros, disponibilidade e escopo antes de cobrança.",
+    integrations: {
+      supabase: persistence.configured,
+      resendInternal: internalEmail.configured,
+      resendConfirmation: confirmationEmail.configured,
+    },
   });
 }

@@ -41,6 +41,7 @@ export type BaseBuilderData = {
   consent: boolean;
   companySite?: string;
   source?: string;
+  turnstileToken?: string;
 };
 
 export type ProductRecommendation =

@@ -1,0 +1,38 @@
+{
+  "source": "sample://rfb-cnpj",
+  "snapshot_date": "sample",
+  "minimum_groups": [
+    "Empresas",
+    "Estabelecimentos",
+    "Simples",
+    "Cnaes",
+    "Municipios"
+  ],
+  "files": [
+    {
+      "group": "Empresas",
+      "url": "sample://rfb-cnpj/Empresas.zip",
+      "validated": true
+    },
+    {
+      "group": "Estabelecimentos",
+      "url": "sample://rfb-cnpj/Estabelecimentos.zip",
+      "validated": true
+    },
+    {
+      "group": "Simples",
+      "url": "sample://rfb-cnpj/Simples.zip",
+      "validated": true
+    },
+    {
+      "group": "Cnaes",
+      "url": "sample://rfb-cnpj/Cnaes.zip",
+      "validated": true
+    },
+    {
+      "group": "Municipios",
+      "url": "sample://rfb-cnpj/Municipios.zip",
+      "validated": true
+    }
+  ]
+}

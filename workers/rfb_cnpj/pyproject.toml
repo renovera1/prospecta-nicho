@@ -1,0 +1,19 @@
+[project]
+name = "prospectanicho-rfb-cnpj-worker"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "polars",
+  "duckdb",
+  "clickhouse-connect",
+  "httpx",
+  "pydantic",
+  "typer",
+  "tenacity",
+  "boto3",
+  "xlsxwriter",
+  "structlog",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]

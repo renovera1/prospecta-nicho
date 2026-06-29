@@ -94,6 +94,7 @@ export const builderSchema = z.object({
   consent: z.boolean().refine((value) => value, "Confirme que leu os termos."),
   companySite: z.string().max(0).optional(),
   source: z.string().optional(),
+  turnstileToken: z.string().optional(),
 });
 
 export type BuilderSchemaInput = z.infer<typeof builderSchema>;

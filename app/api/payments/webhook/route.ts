@@ -1,11 +1,22 @@
 import { NextResponse } from "next/server";
+import { writeAuditLog } from "@/lib/server/integrations";
 
 export async function POST(request: Request) {
-  const secret = process.env.MERCADO_PAGO_WEBHOOK_SECRET;
-  if (!secret) {
+  const payload = await request.text();
+  const mpSecret = process.env.MERCADO_PAGO_WEBHOOK_SECRET;
+  const asaasSecret = process.env.ASAAS_WEBHOOK_TOKEN;
+
+  if (!mpSecret && !asaasSecret) {
     return NextResponse.json({ ok: false, message: "Webhook secret não configurado." }, { status: 501 });
   }
 
-  await request.text();
-  return NextResponse.json({ ok: true, message: "Webhook recebido. Validar assinatura e registrar status do pedido." });
+  await writeAuditLog("payment_webhook_received", {
+    size: payload.length,
+    provider: mpSecret ? "mercado-pago" : "asaas",
+  });
+
+  return NextResponse.json({
+    ok: true,
+    message: "Webhook recebido. A aprovação de pedido exige validação de assinatura, idempotência e persistência configuradas.",
+  });
 }

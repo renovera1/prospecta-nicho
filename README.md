@@ -1,71 +1,84 @@
-# ProspectaNicho Website
+# ProspectaNicho
 
-Site comercial da ProspectaNicho, marca de inteligência comercial e bases B2B segmentadas.
+Plataforma comercial da ProspectaNicho para venda de bases B2B segmentadas, pedidos de amostra, montagem de base personalizada e preparação do motor de dados empresariais.
 
-## Instalação
+## Stack
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- Zod para validacao server-side
+- Supabase como persistencia planejada
+- ClickHouse como camada analitica planejada
+- Worker Python para ingestao e exportacao RFB/CNPJ
+
+## Rodar localmente
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Variáveis
-
-Copie `.env.example` para `.env.local` e configure:
-
-- `NEXT_PUBLIC_SITE_URL`
-- `NEXT_PUBLIC_WHATSAPP_NUMBER`
-- `NEXT_PUBLIC_MP_LINK_EMPRESAS_RECEM_ABERTAS`
-- `NEXT_PUBLIC_MP_LINK_AGENCIAS_MARKETING`
-- `NEXT_PUBLIC_MP_LINK_CONTABILIDADES`
-- `NEXT_PUBLIC_MP_LINK_BASE_PERSONALIZADA`
-- `MERCADO_PAGO_ACCESS_TOKEN`
-- `MERCADO_PAGO_WEBHOOK_SECRET`
-- `RESEND_API_KEY`
-- `CONTACT_EMAIL`
-- `SUPABASE_URL`
-- `SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
-
-## Desenvolvimento
+Para build de producao:
 
 ```bash
-npm run lint
 npm run build
+npm run start
 ```
 
-## Pagamentos
+## Testes e validacao
 
-O site funciona primeiro com links hospedados do Mercado Pago via variáveis públicas. Se o link estiver vazio, o botão cai para WhatsApp.
+```bash
+npm test
+npm run lint
+npm run build
+python -m pytest tests/test_rfb_privacy.py
+python -m workers.rfb_cnpj run --sample
+python -m workers.rfb_cnpj export --sample
+```
 
-Os endpoints `/api/payments/create-preference` e `/api/payments/webhook` estão preparados para Checkout Pro server-side, validação de webhook, idempotência e registro de pedido, mas exigem implementação final com credenciais reais.
+## Variaveis de ambiente
 
-## Supabase
+Copie `.env.example` para `.env.local` e configure os provedores reais antes de publicar:
 
-O schema inicial está em `supabase/schema.sql`. A `SUPABASE_SERVICE_ROLE_KEY` nunca deve ir para o frontend.
+- Site, WhatsApp, analytics e Turnstile
+- Supabase
+- Resend
+- Mercado Pago ou Asaas
+- Cloudflare R2
+- ClickHouse
+- Redis
+- pipeline RFB/CNPJ
+- token administrativo interno
 
-## Resend
+Sem credenciais reais, os endpoints continuam seguros: retornam sucesso controlado para captura comercial quando possivel e bloqueiam recursos internos que dependem de segredo.
 
-Os formulários já postam para endpoints server-side. Para produção, conectar `RESEND_API_KEY` e enviar confirmação para cliente e aviso interno para `CONTACT_EMAIL`.
+## Areas principais
 
-## WhatsApp
+- `/` pagina comercial principal
+- `/montar-minha-base` editor de base personalizada
+- `/para-quem-e` segmentos atendidos
+- `/contato` contato real da ProspectaNicho
+- `/produtos` catalogo comercial
+- `/pedido/[id]` acompanhamento de pedido
+- `/admin` painel tecnico protegido por configuracao
+- `/politica-de-supressao`
+- `/termos-de-entrega`
+- `/aviso-de-dados-empresariais`
 
-Configure `NEXT_PUBLIC_WHATSAPP_NUMBER` no formato `5519999999999`. Os links usam `wa.me` com mensagem preenchida.
+`/blog` redireciona permanentemente para `/`, conforme reposicionamento comercial.
 
-## Deploy
+## Dados e privacidade
 
-Recomendado: Vercel, por causa dos endpoints server-side e webhooks.
+O projeto evita campos pessoais no catalogo padrao de bases e prepara o fluxo para dados empresariais publicos, supressao, auditoria, consentimento, rastreabilidade de exportacoes e revisao de privacidade antes de entregas.
 
-GitHub Pages só serve para uma versão estática e não cobre webhooks ou integrações server-side.
+Documentacao complementar:
 
-## Checklist de produção
-
-- Configurar WhatsApp real.
-- Inserir links reais de pagamento.
-- Configurar Mercado Pago se usar Checkout Pro.
-- Configurar Supabase e aplicar RLS.
-- Configurar Resend e e-mail remetente.
-- Revisar textos legais com advogado.
-- Inserir logo final em `public/assets/brand/`.
-- Testar formulários, consentimento, mobile e CTAs.
-- Validar domínio, analytics e cookies antes de publicar.
+- `docs/architecture.md`
+- `docs/data-pipeline.md`
+- `docs/security.md`
+- `docs/runbook-importacao.md`
+- `docs/runbook-exportacao.md`
+- `docs/production-checklist.md`
+- `infra/clickhouse/schema.sql`
+- `supabase/schema.sql`

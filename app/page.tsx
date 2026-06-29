@@ -8,7 +8,6 @@ import { LeadPreviewSheet } from "@/components/LeadPreviewSheet";
 import { OpportunityRadar } from "@/components/OpportunityRadar";
 import { ProductSignalCard } from "@/components/ProductSignalCard";
 import { SampleConversionSection } from "@/components/SampleConversionSection";
-import { SignalStrip } from "@/components/SignalStrip";
 import { createWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
 import { homeFaq, isExternalHref, products } from "@/lib/site";
 
@@ -72,7 +71,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <SignalStrip />
       <HomeBaseBuilderTeaser />
 
       <section className="section section--light">
@@ -96,6 +94,9 @@ export default function HomePage() {
             <p className="muted">
               Exemplo ilustrativo. Campos entregues variam conforme produto, origem e escopo contratado.
             </p>
+            <div className="signal-chips" style={{ marginTop: 18 }}>
+              {transparency.map((item) => <span key={item}>{item}</span>)}
+            </div>
           </div>
         </div>
       </section>
@@ -136,22 +137,6 @@ export default function HomePage() {
           <ButtonLink href="/montar-minha-base" variant="teal">
             Montar meu recorte
           </ButtonLink>
-        </div>
-      </section>
-
-      <section className="section section--light">
-        <div className="container">
-          <div className="section-kicker center">
-            <p className="eyebrow">Transparencia</p>
-            <h2 className="h2">Recortes claros. Entrega alinhada.</h2>
-          </div>
-          <div className="card-grid">
-            {transparency.map((item) => (
-              <article className="card" key={item}>
-                <h3 className="h3">{item}</h3>
-              </article>
-            ))}
-          </div>
         </div>
       </section>
 

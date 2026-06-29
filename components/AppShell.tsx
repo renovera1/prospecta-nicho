@@ -9,8 +9,6 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 const legacyRoutes = new Set([
   "/sobre",
   "/insights",
-  "/blog",
-  "/contato",
   "/blog-direitos-concessionaria.html",
   "/blog-nova-regulamentacao.html",
   "/blog-6-duvidas.html",

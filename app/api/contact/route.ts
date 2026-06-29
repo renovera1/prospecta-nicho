@@ -1,31 +1,71 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { persistLead, sendTransactionalEmail, writeAuditLog } from "@/lib/server/integrations";
+import { hasHoneypot, rateLimit, sanitizePhone, sanitizeText, verifyTurnstileIfConfigured } from "@/lib/server/security";
 
 const schema = z.object({
-  name: z.string().min(2),
-  company: z.string().min(2),
-  email: z.string().email(),
-  whatsapp: z.string().min(8),
-  niche: z.string().min(2),
-  city: z.string().min(2),
-  state: z.string().optional(),
-  cnae: z.string().optional(),
-  quantity: z.string().optional(),
-  goal: z.string().min(5),
-  notes: z.string().optional(),
-  consent: z.literal(true),
-  companySite: z.string().max(0).optional(),
+  name: z.string().min(2).max(120),
+  company: z.string().min(2).max(160),
+  email: z.string().email().max(180),
+  whatsapp: z.string().min(8).max(32),
+  subject: z.enum([
+    "Dúvida sobre uma base",
+    "Solicitar base personalizada",
+    "Suporte sobre pedido",
+    "Pagamento",
+    "Parceria",
+    "Privacidade",
+    "Outro",
+  ]),
+  message: z.string().min(10).max(3000),
+  consent: z.union([z.literal(true), z.literal("true")]),
+  companySite: z.string().optional(),
+  turnstileToken: z.string().optional(),
 });
 
 export async function POST(request: Request) {
-  const body = await request.json();
-  const parsed = schema.safeParse(body);
-  if (!parsed.success || parsed.data.companySite) {
+  const limited = rateLimit(request, "contact", 6, 60_000);
+  if (limited) return limited;
+
+  const raw = (await request.json()) as Record<string, unknown>;
+  if (hasHoneypot(raw)) {
+    return NextResponse.json({ ok: true, message: "Contato recebido." });
+  }
+
+  const parsed = schema.safeParse(raw);
+  if (!parsed.success) {
     return NextResponse.json({ ok: false, message: "Dados inválidos." }, { status: 400 });
   }
 
+  const turnstileOk = await verifyTurnstileIfConfigured(request, parsed.data.turnstileToken);
+  if (!turnstileOk) {
+    return NextResponse.json({ ok: false, message: "Falha na verificação de segurança." }, { status: 403 });
+  }
+
+  const payload = {
+    source: "contact",
+    name: sanitizeText(parsed.data.name, 120),
+    company: sanitizeText(parsed.data.company, 160),
+    email: sanitizeText(parsed.data.email, 180),
+    whatsapp: sanitizePhone(parsed.data.whatsapp),
+    subject: parsed.data.subject,
+    message: sanitizeText(parsed.data.message, 3000),
+    consent: true,
+    createdAt: new Date().toISOString(),
+  };
+
+  const persistence = await persistLead("contact_requests", payload);
+  const internalEmail = await sendTransactionalEmail("contact_internal", payload);
+  const confirmationEmail = await sendTransactionalEmail("contact_confirmation", payload);
+  await writeAuditLog("contact_submitted", { email: payload.email, subject: payload.subject });
+
   return NextResponse.json({
     ok: true,
-    message: "Contato recebido. Integre RESEND_API_KEY e Supabase para persistir e notificar.",
+    id: persistence.id,
+    integrations: {
+      supabase: persistence.configured,
+      resendInternal: internalEmail.configured,
+      resendConfirmation: confirmationEmail.configured,
+    },
   });
 }

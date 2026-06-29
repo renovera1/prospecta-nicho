@@ -1,0 +1,13 @@
+import { NextResponse } from "next/server";
+import { requireAdmin, integrationStatus } from "@/lib/server/admin-auth";
+
+export async function POST(request: Request) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
+  return NextResponse.json({
+    ok: true,
+    countRange: null,
+    integrations: integrationStatus(),
+    message: "Contagem depende do ClickHouse configurado e não é simulada publicamente.",
+  });
+}

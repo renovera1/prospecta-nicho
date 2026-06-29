@@ -15,24 +15,28 @@ export function Footer() {
           <h3>Bases</h3>
           {products.slice(0, 4).map((product) => (
             <p key={product.slug}>
-              <Link href={`/produtos/${product.slug}`}>{product.shortName}</Link>
+              <Link href={product.slug === "base-personalizada" ? "/montar-minha-base" : `/produtos/${product.slug}`}>
+                {product.shortName}
+              </Link>
             </p>
           ))}
         </div>
         <div>
           <h3>Para quem é</h3>
-          {solutions.slice(0, 4).map((solution) => (
+          <p><Link href="/para-quem-e">Visão geral</Link></p>
+          {solutions.slice(0, 3).map((solution) => (
             <p key={solution.slug}>
               <Link href={`/solucoes/${solution.slug}`}>{solution.slug.replaceAll("-", " ")}</Link>
             </p>
           ))}
         </div>
         <div>
-          <h3>Legal</h3>
+          <h3>Suporte e legal</h3>
+          <p><Link href="/contato">Contato</Link></p>
           <p><Link href="/politica-de-privacidade">Política de Privacidade</Link></p>
+          <p><Link href="/politica-de-supressao">Política de Supressão</Link></p>
           <p><Link href="/termos-de-uso">Termos de Uso</Link></p>
           <p><Link href="/politica-de-cookies">Política de Cookies</Link></p>
-          <p><Link href="/contato">Contato</Link></p>
         </div>
       </div>
       <div className="container">

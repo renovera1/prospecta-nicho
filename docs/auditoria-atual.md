@@ -1,80 +1,80 @@
 # Auditoria atual - ProspectaNicho
 
-## Componentes preservados
+## Estrutura atual
 
-- `Brand`, `BrandWatermark`, `ButtonLink`, `CookieBanner`, `FAQAccordion`, `Footer`, `LeadPreviewSheet`, `OpportunityRadar`, `ProductSignalCard`, `SampleConversionSection` e `WhatsAppButton`.
-- Layout global com `AppShell`, preservando o isolamento das rotas legadas Renovera.
-- Assets oficiais em `public/assets/brand`: `logo-horizontal.svg`, `logo-horizontal-light.svg`, `shield-icon.svg`, `shield-icon-light.svg`, `favicon.svg` e `og-image.png`.
+- `app/`: rotas Next.js, APIs públicas, APIs internas protegidas, páginas legais, admin e status de compra.
+- `components/`: UI, formulários, layout, radar, cards e editor.
+- `components/editor/`: fluxo "Monte sua base".
+- `lib/`: configuração de site, catálogo de produtos, WhatsApp, analytics, pagamentos, segurança server-side e integrações.
+- `public/assets/brand/`: identidade visual oficial.
+- `public/assets/renovera-legado/`: páginas legadas Renovera isoladas em iframe para rotas específicas antigas.
+- `supabase/`: schema transacional com RLS.
+- `infra/clickhouse/`: schema analítico.
+- `workers/rfb_cnpj/`: scaffolding do worker Python da Receita Federal.
+- `docs/`: arquitetura, runbooks, segurança e checklist de produção.
+- `tests/`: testes JS e Python para regras críticas.
 
-## Componentes refatorados
+## Rotas existentes
 
-- `Header`: nova navegacao com Bases, Monte sua base, Para quem e, Como funciona, Conteudos e Contato.
-- `HomeSampleForm`: amostra com menos atrito, sem e-mail obrigatorio e empresa opcional.
-- `ProductSignalCard`: cards com promessa comercial, indicado para, entrega, preco, CTA e link secundario.
-- `OpportunityRadar` e `LeadPreviewSheet`: textos limpos e exemplos ficticios alinhados ao posicionamento.
-- `app/page.tsx`: home reorganizada em hero, criterios, entrada do editor, demonstracao, produtos, segmentos, transparencia, amostra, FAQ e CTA final.
+- Públicas principais: `/`, `/produtos`, `/produtos/[slug]`, `/montar-minha-base`, `/para-quem-e`, `/como-funciona`, `/campos-da-base`, `/faq`, `/contato`, `/sobre`.
+- Produto/amostra: `/produtos/amostra-gratuita`, `/produtos/base-personalizada`, `/amostra`.
+- Soluções: `/solucoes` e `/solucoes/[slug]`.
+- Compra/pedido: `/compra/sucesso`, `/compra/pendente`, `/compra/erro`, `/pedido/[id]`.
+- Legal: `/politica-de-privacidade`, `/politica-de-supressao`, `/termos-de-uso`, `/termos-de-entrega`, `/aviso-de-dados-empresariais`, `/politica-de-cookies`.
+- Admin: `/admin`.
+- Desativada: `/blog` redireciona permanentemente para `/`.
 
-## Rotas preservadas
+## Componentes existentes
 
-- `/`
-- `/produtos`
-- `/produtos/[slug]`
-- `/produtos/amostra-gratuita`
-- `/produtos/base-personalizada`
-- `/solucoes`
-- `/solucoes/[slug]`
-- `/como-funciona`
-- `/campos-da-base`
-- `/faq`
-- `/sobre`
-- `/contato`
-- `/blog`
-- Politicas e termos
-- Paginas de status de compra
-- Rotas legadas Renovera e artigos `.html`
+- Preservados: `Brand`, `BrandWatermark`, `ButtonLink`, `CookieBanner`, `FAQAccordion`, `Footer`, `Header`, `WhatsAppButton`.
+- Refatorados: `ProductSignalCard`, `HomeSampleForm`, `SampleConversionSection`, `LeadPreviewSheet`, `OpportunityRadar`.
+- Criados: `ContactForm`, `HomeBaseBuilderTeaser` e componentes de `components/editor`.
 
-## Rotas criadas
+## Formulários
 
-- `/montar-minha-base`
-- `/amostra` como atalho para a amostra gratuita
+- Amostra gratuita: `POST /api/free-sample-request` e alias `POST /api/sample-request`.
+- Editor de recorte: `POST /api/custom-base-request`.
+- Contato: `POST /api/contact`.
 
-## Integracoes existentes
+Todos usam Zod, honeypot, rate limit, sanitização, Turnstile preparado, persistência/e-mail isolados por adaptadores e retorno explícito de status de integração.
 
-- `NEXT_PUBLIC_WHATSAPP_NUMBER`: usado pelo helper central `lib/whatsapp.ts`.
-- Links de pagamento por variaveis `NEXT_PUBLIC_MP_LINK_*`.
-- Endpoints atuais:
-  - `/api/free-sample-request`
-  - `/api/custom-base-request`
-  - `/api/contact`
-  - `/api/payments/create-preference`
-  - `/api/payments/webhook`
+## Endpoints internos
 
-## Formularios com backend real
+- `POST /api/internal/leads/search`
+- `POST /api/internal/leads/count`
+- `POST /api/internal/leads/export`
+- `GET /api/internal/exports/[id]`
+- `POST /api/internal/imports/run`
+- `GET /api/internal/imports/status`
 
-- Formulario de amostra: envia para `/api/free-sample-request`.
-- Editor de base: envia para `/api/custom-base-request`.
-- Formulario de contato/base personalizada antigo: preservado e aceito pelo endpoint.
+Todos exigem `ADMIN_API_TOKEN` e não expõem dados reais sem infraestrutura configurada.
 
-Os endpoints validam payload e retornam sucesso, mas persistencia e envio de e-mails ainda dependem das credenciais abaixo.
+## Variáveis usadas
 
-## Pendencias tecnicas
+`NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_WHATSAPP_NUMBER`, `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `CONTACT_EMAIL`, links públicos de Mercado Pago, tokens Mercado Pago/Asaas, R2/S3, ClickHouse, Redis, `RFB_CNPJ_BASE_URL`, `TURNSTILE_SECRET_KEY`, `ADMIN_API_TOKEN`.
 
-- Persistencia real em Supabase depende de `SUPABASE_URL`, `SUPABASE_ANON_KEY` e `SUPABASE_SERVICE_ROLE_KEY`.
-- E-mails internos e confirmacao ao cliente dependem de `RESEND_API_KEY`.
-- Checkout Mercado Pago depende dos links publicos de produto ou das credenciais privadas de Mercado Pago.
-- Analytics so dispara eventos quando `NEXT_PUBLIC_GA_ID` estiver configurado.
-- Algumas paginas antigas do catalogo ainda usam textos originais do repositório e podem receber uma segunda passada de copy premium.
+## Estado das integrações
 
-## Riscos encontrados
+- WhatsApp: helper central pronto; depende de `NEXT_PUBLIC_WHATSAPP_NUMBER`.
+- Supabase: schema e RLS criados; persistência real depende de credenciais.
+- Resend: adaptador preparado; envio real depende de `RESEND_API_KEY`.
+- Pagamentos: interface Mercado Pago/Asaas preparada; checkout real depende de provider configurado.
+- ClickHouse: schema criado; consultas reais dependem de infraestrutura.
+- Receita Federal: worker scaffold com modo `--sample`; importação nacional depende de RFB/R2/ClickHouse.
+- Exportações: contratos e runbook criados; geração real depende de fila, storage e confirmação de pagamento.
 
-- Varios arquivos tinham textos com encoding corrompido. As areas tocadas foram corrigidas, mas pode haver ocorrencias remanescentes em paginas nao refatoradas.
-- `NEXT_PUBLIC_SITE_URL` deve ser ajustado fora de localhost antes de producao para canonical, sitemap e Open Graph.
-- A base personalizada nao deve ir direto para checkout automatico; a regra foi ajustada para passar por `/montar-minha-base`.
+## Links e CTAs
 
-## Verificacoes feitas nesta auditoria
+- Header final: Bases, Monte sua base, Para quem é, Como funciona, Receber amostra.
+- Blog/Conteúdos removidos do header, footer e sitemap.
+- `/contato` removido do menu principal e mantido no footer.
+- CTAs padronizados conforme briefing.
 
-- Componentes e rotas mapeados.
-- Endpoints de formulario revisados.
-- WhatsApp centralizado em `lib/whatsapp.ts`.
-- Sitemap atualizado com `/montar-minha-base` e `/amostra`.
-- Estrutura de testes basicos criada para editor, recomendacao, URL segura e WhatsApp.
+## Riscos e pendências para produção
+
+- Configurar credenciais reais em ambiente seguro.
+- Implementar chamadas reais Supabase/Resend/provider de pagamento no adaptador.
+- Rodar importação real da Receita em infraestrutura separada de Vercel.
+- Conectar ClickHouse e R2/S3.
+- Evoluir `/admin` para Supabase Auth com perfis `admin`, `operador` e `leitura`.
+- Validar domínio final em `NEXT_PUBLIC_SITE_URL`.

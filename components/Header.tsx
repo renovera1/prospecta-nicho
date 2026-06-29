@@ -10,10 +10,8 @@ import { createWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
 const navItems = [
   ["Bases", "/produtos"],
   ["Monte sua base", "/montar-minha-base"],
-  ["Para quem e", "/solucoes"],
+  ["Para quem é", "/para-quem-e"],
   ["Como funciona", "/como-funciona"],
-  ["Conteudos", "/blog"],
-  ["Contato", "/contato"],
 ];
 
 export function Header() {
