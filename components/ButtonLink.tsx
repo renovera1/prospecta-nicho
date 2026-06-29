@@ -12,7 +12,7 @@ export function ButtonLink({ href, children, variant = "primary", external }: Pr
   const className = `button button--${variant}`;
   if (external) {
     return (
-      <a className={className} href={href} target="_blank" rel="noreferrer">
+      <a className={className} href={href} target="_blank" rel="noopener noreferrer">
         {children}
       </a>
     );

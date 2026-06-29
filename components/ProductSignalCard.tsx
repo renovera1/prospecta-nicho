@@ -14,31 +14,31 @@ const visualIcons = {
 
 const copyBySlug: Record<string, { title: string; promise: string; audience: string; delivery: string; cta: string }> = {
   "empresas-recem-abertas": {
-    title: "Empresas recem-abertas",
-    promise: "Entre na conversa quando a empresa ainda esta definindo fornecedores, presenca e operacao.",
-    audience: "Agencias, contabilidades, ERP, certificado digital e comunicacao visual.",
+    title: "Empresas recém-abertas",
+    promise: "Entre na conversa quando a empresa ainda está estruturando fornecedores, presença e operação.",
+    audience: "Agências, contabilidades, ERP, certificado digital e comunicação visual.",
     delivery: "Planilha organizada para Excel ou Google Sheets.",
     cta: "Escolher esta base",
   },
   "agencias-marketing": {
-    title: "Base para agencias",
-    promise: "Encontre empresas com potencial para site, trafego, social media, branding e presenca digital.",
-    audience: "Agencias, social medias, web designers e consultores de marketing.",
+    title: "Base para agências",
+    promise: "Encontre empresas com potencial para site, tráfego, social media, branding e presença digital.",
+    audience: "Agências, social medias, web designers e consultores de marketing.",
     delivery: "Recorte pronto para abordagem consultiva.",
     cta: "Escolher esta base",
   },
   contabilidades: {
     title: "Base para contabilidades",
-    promise: "Mapeie empresas novas e segmentos com demanda por rotina contabil e fiscal.",
-    audience: "Escritorios contabeis, BPO financeiro e certificado digital.",
-    delivery: "Planilha com criterios comerciais e cadastrais.",
+    promise: "Aproxime-se de empresas recém-abertas antes da concorrência.",
+    audience: "Escritórios contábeis, BPO financeiro e certificado digital.",
+    delivery: "Planilha com critérios comerciais e cadastrais.",
     cta: "Escolher esta base",
   },
   "base-personalizada": {
     title: "Base personalizada",
-    promise: "Defina nicho, cidade, porte, periodo e campos desejados para uma validacao de escopo.",
-    audience: "Operacoes B2B com publico especifico ou territorio definido.",
-    delivery: "Recorte validado antes da confirmacao final.",
+    promise: "Defina cidade, nicho, porte, período e campos desejados para uma validação de escopo.",
+    audience: "Operações B2B com público específico ou território definido.",
+    delivery: "Recorte validado antes da confirmação final.",
     cta: "Montar meu recorte",
   },
 };
@@ -55,7 +55,7 @@ export function ProductSignalCard({ product }: { product: Product }) {
   };
 
   return (
-    <article className="product-signal-card">
+    <article className={`product-signal-card ${product.slug === "empresas-recem-abertas" ? "product-signal-card--featured" : ""}`}>
       <div className="product-visual">
         <Image src="/assets/brand/shield-icon-light.svg" alt="" width={118} height={138} aria-hidden="true" />
         <Icon size={42} />

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { MessageCircle } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
+import { createWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Contato",
@@ -7,10 +9,12 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const whatsappHref = createWhatsAppLink(defaultWhatsAppMessage);
+
   return (
     <>
       <section className="hero">
-        <div className="container">
+        <div className="container-wide">
           <p className="eyebrow">Contato</p>
           <h1 className="h1">Fale sobre o público que você quer alcançar.</h1>
           <p className="lead">
@@ -19,8 +23,7 @@ export default function ContactPage() {
         </div>
       </section>
       <section className="section section--light">
-        <div className="container split-section">
-          <ContactForm />
+        <div className="container-wide split-section">
           <div className="card">
             <p className="eyebrow">Quando usar este canal</p>
             <h2 className="h2">Suporte, pedidos e privacidade.</h2>
@@ -34,7 +37,14 @@ export default function ContactPage() {
               <span>Formato preparado para rotina comercial</span>
               <span>Suporte humano para validar o recorte</span>
             </div>
+            {whatsappHref ? (
+              <a className="button button--teal" href={whatsappHref} target="_blank" rel="noopener noreferrer" style={{ marginTop: 22 }}>
+                <MessageCircle size={18} />
+                Falar sobre meu público no WhatsApp
+              </a>
+            ) : null}
           </div>
+          <ContactForm />
         </div>
       </section>
     </>

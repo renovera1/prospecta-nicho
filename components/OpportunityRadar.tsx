@@ -1,19 +1,21 @@
 import Image from "next/image";
 
 const signals = [
-  "Empresas abertas nos ultimos 60 dias",
-  "Campinas + regiao",
+  "Empresas abertas nos últimos 60 dias",
+  "Campinas + região",
   "CNAE 7319",
   "ME e EPP",
-  "Perfil: contratacao de marketing",
+  "Perfil: contratação de marketing",
 ];
 
 export function OpportunityRadar() {
   return (
-    <div className="opportunity-radar" aria-label="Radar de oportunidades comerciais com exemplos ficticios">
+    <div className="opportunity-radar" aria-label="Radar de oportunidades comerciais com exemplos fictícios">
       <Image className="radar-shield" src="/assets/brand/shield-icon-light.svg" alt="" width={210} height={245} aria-hidden="true" />
+      <span className="radar-status">Exemplo ilustrativo</span>
       <div className="radar-map">
         <span className="radar-pulse" />
+        <span className="radar-sweep" />
         <span className="radar-dot dot-a" />
         <span className="radar-dot dot-b" />
         <span className="radar-dot dot-c" />
@@ -26,9 +28,9 @@ export function OpportunityRadar() {
         {signals.map((signal) => <span key={signal}>{signal}</span>)}
       </div>
       <div className="radar-list">
-        <div><b>Atelie Luma</b><span>Campinas - nova empresa</span></div>
-        <div><b>Clinica Norte</b><span>Jundiai - perfil ideal</span></div>
-        <div><b>Vertice Midia</b><span>Sorocaba - em expansao</span></div>
+        <div><b>Ateliê Luma</b><span>Campinas - nova empresa</span></div>
+        <div><b>Clínica Norte</b><span>Jundiaí - perfil ideal</span></div>
+        <div><b>Vértice Mídia</b><span>Sorocaba - em expansão</span></div>
       </div>
     </div>
   );

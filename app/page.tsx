@@ -4,7 +4,7 @@ import { BrandWatermark } from "@/components/BrandWatermark";
 import { ButtonLink } from "@/components/ButtonLink";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { HomeBaseBuilderTeaser } from "@/components/HomeBaseBuilderTeaser";
-import { LeadPreviewSheet } from "@/components/LeadPreviewSheet";
+import { LeadDeliveryPreview } from "@/components/LeadDeliveryPreview";
 import { OpportunityRadar } from "@/components/OpportunityRadar";
 import { ProductSignalCard } from "@/components/ProductSignalCard";
 import { SampleConversionSection } from "@/components/SampleConversionSection";
@@ -12,30 +12,23 @@ import { createWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
 import { homeFaq, isExternalHref, products } from "@/lib/site";
 
 const impactCards = [
-  "Publico definido antes da busca",
-  "Empresas organizadas para prospeccao",
-  "Menos tempo procurando",
-  "Mais contexto para vender",
+  "Público definido antes da busca",
+  "Estrutura pronta para rotina comercial",
+  "Campos confirmados conforme disponibilidade",
+  "Suporte humano para validar o recorte",
 ];
 
 const segments = [
-  ["Agencias", "Encontre empresas no momento de estruturar presenca digital."],
-  ["Contabilidades", "Aproxime-se de empresas recem-abertas antes da concorrencia."],
-  ["Energia solar", "Priorize regioes e perfis com maior potencial comercial."],
-  ["ERP e sistemas", "Ache empresas com rotina operacional e necessidade de organizacao."],
-  ["Maquininhas", "Prospecte negocios que vendem presencialmente ou estao comecando."],
-  ["Comunicacao visual", "Chegue quando a empresa precisa de fachada, marca e materiais."],
-  ["Consultorias", "Filtre empresas por momento, porte e atividade economica."],
+  ["Agências", "Encontre empresas que estão estruturando presença digital."],
+  ["Contabilidades", "Aproxime-se de empresas recém-abertas antes da concorrência."],
+  ["Energia solar", "Priorize regiões e perfis com maior potencial comercial."],
+  ["ERP e sistemas", "Ache empresas com rotina operacional e necessidade de organização."],
+  ["Maquininhas", "Prospecte negócios que vendem presencialmente ou estão começando."],
+  ["Comunicação visual", "Chegue quando a empresa precisa de fachada, marca e materiais."],
+  ["Consultorias", "Filtre empresas por momento, porte e atividade econômica."],
   ["Certificado digital", "Encontre empresas com demanda operacional inicial."],
-  ["Seguros empresariais", "Mapeie negocios que precisam proteger sua operacao."],
-  ["Seguranca do trabalho", "Foque em segmentos com exigencias e riscos operacionais."],
-];
-
-const transparency = [
-  "Criterios definidos antes da entrega",
-  "Campos confirmados conforme disponibilidade",
-  "Formato preparado para rotina comercial",
-  "Suporte humano para validar o recorte",
+  ["Seguros empresariais", "Mapeie negócios que precisam proteger sua operação."],
+  ["Segurança do trabalho", "Foque em segmentos com exigências e riscos operacionais."],
 ];
 
 export default function HomePage() {
@@ -46,13 +39,13 @@ export default function HomePage() {
     <>
       <section className="hero hero--premium">
         <BrandWatermark tone="light" />
-        <div className="container hero-grid">
+        <div className="container-wide hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow eyebrow--dark">INTELIGENCIA COMERCIAL PARA QUEM PRECISA CRESCER</p>
-            <h1 className="h1">Encontre empresas no momento em que sua oferta faz mais sentido.</h1>
+            <p className="eyebrow eyebrow--dark">INTELIGÊNCIA COMERCIAL PARA QUEM PRECISA CRESCER</p>
+            <h1 className="h1">Encontre empresas com o perfil certo para sua próxima venda.</h1>
             <p className="lead">
-              Defina nicho, cidade, porte, CNAE e momento de abertura. A ProspectaNicho transforma seus criterios em
-              uma base organizada para prospeccao.
+              Defina nicho, cidade, porte, CNAE e momento de abertura. A ProspectaNicho organiza seu recorte comercial
+              para você prospectar com mais contexto.
             </p>
             <div className="btn-row">
               <ButtonLink href="/montar-minha-base" variant="teal">
@@ -64,7 +57,7 @@ export default function HomePage() {
               </ButtonLink>
             </div>
             <p className="hero-microcopy">
-              Sem assinatura obrigatoria. Sem lista generica. Recortes construidos para sua operacao.
+              Sem assinatura obrigatória. Sem lista genérica. Recortes construídos para sua operação.
             </p>
           </div>
           <OpportunityRadar />
@@ -74,13 +67,13 @@ export default function HomePage() {
       <HomeBaseBuilderTeaser />
 
       <section className="section section--light">
-        <div className="container split-section">
-          <LeadPreviewSheet />
+        <div className="container-wide split-section">
+          <LeadDeliveryPreview />
           <div>
-            <p className="eyebrow">DEMONSTRACAO DA ENTREGA</p>
+            <p className="eyebrow">DEMONSTRAÇÃO DA ENTREGA</p>
             <h2 className="h2">Veja como sua base chega para a equipe comercial.</h2>
             <p className="lead">
-              A entrega prioriza campos uteis para abordagem: empresa, segmento, cidade, CNAE, porte, abertura, site,
+              A entrega prioriza campos úteis para abordagem: empresa, segmento, cidade, CNAE, porte, abertura, site,
               contato empresarial e status comercial ilustrativo.
             </p>
             <div className="impact-stack">
@@ -91,24 +84,18 @@ export default function HomePage() {
                 </span>
               ))}
             </div>
-            <p className="muted">
-              Exemplo ilustrativo. Campos entregues variam conforme produto, origem e escopo contratado.
-            </p>
-            <div className="signal-chips" style={{ marginTop: 18 }}>
-              {transparency.map((item) => <span key={item}>{item}</span>)}
-            </div>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <div className="container">
+        <div className="container-wide">
           <div className="section-kicker">
             <p className="eyebrow">Bases comerciais</p>
-            <h2 className="h2">Escolha o gatilho comercial da sua proxima venda.</h2>
+            <h2 className="h2">Escolha o gatilho comercial da sua próxima venda.</h2>
             <p className="lead">
-              Bases prontas para comecar agora ou recortes personalizados quando seu publico exige filtros mais
-              especificos.
+              Bases prontas para começar agora ou recortes personalizados quando seu público exige filtros mais
+              específicos.
             </p>
           </div>
           <div className="product-signal-grid">
@@ -121,14 +108,14 @@ export default function HomePage() {
 
       <section className="section dark-band segment-band">
         <BrandWatermark tone="light" />
-        <div className="container">
+        <div className="container-wide">
           <div className="section-kicker">
-            <p className="eyebrow eyebrow--dark">Para quem e</p>
-            <h2 className="h2">Para quem precisa transformar prospeccao em rotina comercial.</h2>
+            <p className="eyebrow eyebrow--dark">Para quem é</p>
+            <h2 className="h2">Uma base melhor começa com um público melhor definido.</h2>
           </div>
           <div className="segment-labels">
             {segments.map(([label, text]) => (
-              <Link href="/montar-minha-base" key={label} aria-label={`${label}: ${text}`}>
+              <Link href={`/montar-minha-base?segment=${encodeURIComponent(label)}`} key={label} aria-label={`${label}: ${text}`}>
                 <strong>{label}</strong>
                 <span>{text}</span>
               </Link>
@@ -143,10 +130,10 @@ export default function HomePage() {
       <SampleConversionSection />
 
       <section className="section section--light">
-        <div className="container faq-short">
+        <div className="container-wide faq-short">
           <div>
             <p className="eyebrow">FAQ</p>
-            <h2 className="h2">Antes de comecar, voce talvez queira saber.</h2>
+            <h2 className="h2">Antes de começar, você talvez queira saber.</h2>
             <ButtonLink href="/faq" variant="secondary">
               Ver todas as duvidas
             </ButtonLink>
@@ -157,10 +144,10 @@ export default function HomePage() {
 
       <section className="section final-cta">
         <BrandWatermark tone="light" />
-        <div className="container">
+        <div className="container-reading">
           <h2 className="h2">Menos tempo procurando. Mais tempo falando com empresas que fazem sentido.</h2>
           <p className="lead">
-            Transforme seu publico ideal em uma base pronta para prospeccao, com criterios claros e validacao humana.
+            Transforme seu público ideal em uma base pronta para prospecção, com critérios claros e validação humana.
           </p>
           <div className="btn-row">
             <ButtonLink href="/montar-minha-base" variant="teal">
@@ -169,7 +156,7 @@ export default function HomePage() {
             {whatsappHref ? (
               <ButtonLink href={whatsappHref} variant="secondary" external={isExternalHref(whatsappHref)}>
                 <MessageCircle size={18} />
-                Falar sobre meu publico
+                Falar sobre meu público
               </ButtonLink>
             ) : (
               <ButtonLink href="/produtos" variant="secondary">

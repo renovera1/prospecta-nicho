@@ -5,7 +5,7 @@ import { products, site, solutions } from "@/lib/site";
 export function Footer() {
   return (
     <footer className="footer">
-      <div className="container footer-grid">
+      <div className="container-wide footer-grid">
         <div>
           <Brand variant="light" />
           <p>{site.institutional}</p>
@@ -39,7 +39,7 @@ export function Footer() {
           <p><Link href="/politica-de-cookies">Política de Cookies</Link></p>
         </div>
       </div>
-      <div className="container">
+      <div className="container-wide">
         <p style={{ marginTop: 32, color: "rgba(255,255,255,.62)" }}>
           © {new Date().getFullYear()} ProspectaNicho. Dados e campos variam conforme disponibilidade, fontes públicas e escopo contratado.
         </p>

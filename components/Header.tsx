@@ -2,7 +2,7 @@
 
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Brand } from "@/components/Brand";
 import { ButtonLink } from "@/components/ButtonLink";
 import { createWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
@@ -18,9 +18,16 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const whatsappHref = createWhatsAppLink(defaultWhatsAppMessage);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <header className="header">
-      <div className="container">
+      <div className="container-wide">
         <nav className="nav" aria-label="Principal">
           <Brand />
           <div className="nav-links">
@@ -56,7 +63,7 @@ export function Header() {
             Receber amostra
           </ButtonLink>
           {whatsappHref ? (
-            <a className="button button--secondary" href={whatsappHref} target="_blank" rel="noreferrer">
+            <a className="button button--secondary" href={whatsappHref} target="_blank" rel="noopener noreferrer">
               WhatsApp direto
             </a>
           ) : null}

@@ -4,7 +4,7 @@ import test from "node:test";
 import { buildWhatsAppUrl } from "../lib/whatsapp.ts";
 import { productCatalog } from "../lib/products.ts";
 
-test("metadata default nao usa localhost", () => {
+test("metadata default não usa localhost", () => {
   const source = readFileSync("lib/site.ts", "utf8");
   const fallbackLine = source.split("\n").find((line) => line.includes("url: process.env.NEXT_PUBLIC_SITE_URL"));
   assert.ok(fallbackLine);
@@ -14,18 +14,40 @@ test("metadata default nao usa localhost", () => {
   assert.equal(fallbackLine.includes(":3001"), false);
 });
 
-test("whatsapp usa wa.me quando numero esta configurado", () => {
+test("whatsapp usa wa.me quando número está configurado", () => {
   const previous = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER = "5519999999999";
-  const url = buildWhatsAppUrl("Ola");
+  const url = buildWhatsAppUrl("Olá");
   assert.match(url, /^https:\/\/wa\.me\/5519999999999\?text=/);
   if (previous === undefined) delete process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
   else process.env.NEXT_PUBLIC_WHATSAPP_NUMBER = previous;
 });
 
-test("catalogo nao promete campos pessoais proibidos", () => {
+test("catálogo não promete campos pessoais proibidos", () => {
   const fields = productCatalog.flatMap((product) => product.defaultFields).join(" ").toLowerCase();
   assert.equal(fields.includes("cpf"), false);
   assert.equal(fields.includes("sócio"), false);
   assert.equal(fields.includes("telefone particular"), false);
+});
+
+test("blog público redireciona para home", () => {
+  const source = readFileSync("app/blog/page.tsx", "utf8");
+  assert.match(source, /permanentRedirect\("\/"\)/);
+});
+
+test("formulários comerciais têm honeypot, rate limit e Turnstile preparado", () => {
+  for (const route of ["app/api/contact/route.ts", "app/api/free-sample-request/route.ts", "app/api/custom-base-request/route.ts"]) {
+    const source = readFileSync(route, "utf8");
+    assert.match(source, /rateLimit/);
+    assert.match(source, /hasHoneypot/);
+    assert.match(source, /verifyTurnstileIfConfigured/);
+  }
+});
+
+test("pagamentos não aprovam fluxo sem webhook validado", () => {
+  const webhook = readFileSync("app/api/payments/webhook/route.ts", "utf8");
+  const preference = readFileSync("app/api/payments/create-preference/route.ts", "utf8");
+  assert.match(webhook, /MERCADO_PAGO_WEBHOOK_SECRET|ASAAS_WEBHOOK_SECRET/);
+  assert.match(preference, /Base personalizada/);
+  assert.match(preference, /status: 409/);
 });

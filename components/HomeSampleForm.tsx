@@ -10,6 +10,7 @@ export function HomeSampleForm() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
   const [started, setStarted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function markStarted() {
     if (!started) {
@@ -20,7 +21,9 @@ export function HomeSampleForm() {
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (loading) return;
     setError("");
+    setLoading(true);
     const form = new FormData(event.currentTarget);
     const response = await fetch("/api/free-sample-request", {
       method: "POST",
@@ -37,16 +40,18 @@ export function HomeSampleForm() {
     });
 
     if (!response.ok) {
-      setError("Nao foi possivel enviar agora. Confira os campos e tente novamente.");
+      setError("Não foi possível enviar agora. Confira os campos e tente novamente.");
+      setLoading(false);
       return;
     }
 
     trackEvent("sample_form_submitted");
+    setLoading(false);
     setSent(true);
   }
 
   if (sent) {
-    const href = createWhatsAppLink("Ola, solicitei uma amostra gratuita pelo site e quero confirmar meu nicho/regiao.");
+    const href = createWhatsAppLink("Olá, solicitei uma amostra gratuita pelo site e quero confirmar meu nicho/região.");
     const finalHref = href || "/produtos";
     const external = isExternalHref(finalHref);
     return (
@@ -55,7 +60,7 @@ export function HomeSampleForm() {
         <p>
           {site.whatsapp
             ? "Abra o WhatsApp para acelerar o envio e confirmar o melhor recorte."
-            : "Recebemos sua solicitacao. Configure o WhatsApp real para atendimento direto."}
+            : "Recebemos sua solicitação. Configure o WhatsApp real para atendimento direto."}
         </p>
         <a
           className="button button--primary"
@@ -63,7 +68,7 @@ export function HomeSampleForm() {
           target={external ? "_blank" : undefined}
           rel={external ? "noreferrer" : undefined}
         >
-          {site.whatsapp ? "Falar sobre meu publico" : "Ver bases a partir de R$ 147"}
+          {site.whatsapp ? "Falar sobre meu público" : "Ver bases a partir de R$ 147"}
         </a>
       </div>
     );
@@ -84,7 +89,7 @@ export function HomeSampleForm() {
         <input name="niche" required minLength={2} />
       </label>
       <label>
-        Cidade ou regiao
+        Cidade ou região
         <input name="city" required minLength={2} />
       </label>
       <label>
@@ -92,11 +97,11 @@ export function HomeSampleForm() {
         <input name="company" />
       </label>
       {error ? <span className="error">{error}</span> : null}
-      <button className="button button--primary" type="submit">
+      <button className="button button--primary" type="submit" disabled={loading}>
         <Send size={18} />
-        Receber minha amostra
+        {loading ? "Enviando..." : "Quero receber minha amostra grátis agora"}
       </button>
-      <p>Sem cartao. Sem compromisso. Voce valida o formato antes de contratar uma base.</p>
+      <p>Sem cartão. Sem compromisso. Você valida o formato antes de contratar uma base.</p>
     </form>
   );
 }

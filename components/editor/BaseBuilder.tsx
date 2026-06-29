@@ -112,7 +112,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
 
   return (
     <section className="section editor-section">
-      <div className="container editor-layout">
+      <div className="container-wide editor-layout">
         <div className="editor-main">
           <div className="section-kicker">
             <p className="eyebrow">Monte sua base</p>
