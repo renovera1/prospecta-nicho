@@ -1,0 +1,69 @@
+"use client";
+
+import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { Brand } from "@/components/Brand";
+import { ButtonLink } from "@/components/ButtonLink";
+import { createWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
+
+const navItems = [
+  ["Bases", "/produtos"],
+  ["Monte sua base", "/montar-minha-base"],
+  ["Para quem e", "/solucoes"],
+  ["Como funciona", "/como-funciona"],
+  ["Conteudos", "/blog"],
+  ["Contato", "/contato"],
+];
+
+export function Header() {
+  const [open, setOpen] = useState(false);
+  const whatsappHref = createWhatsAppLink(defaultWhatsAppMessage);
+
+  return (
+    <header className="header">
+      <div className="container">
+        <nav className="nav" aria-label="Principal">
+          <Brand />
+          <div className="nav-links">
+            {navItems.map(([label, href]) => (
+              <Link key={href} href={href}>
+                {label}
+              </Link>
+            ))}
+          </div>
+          <ButtonLink href="/produtos/amostra-gratuita" variant="teal">
+            Receber amostra
+          </ButtonLink>
+          <button
+            className="mobile-toggle"
+            type="button"
+            aria-label={open ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </nav>
+        <div className="mobile-panel" data-open={open}>
+          {navItems.map(([label, href]) => (
+            <Link key={href} href={href} onClick={() => setOpen(false)}>
+              {label}
+            </Link>
+          ))}
+          <ButtonLink href="/montar-minha-base" variant="primary">
+            Montar minha base
+          </ButtonLink>
+          <ButtonLink href="/produtos/amostra-gratuita" variant="teal">
+            Receber amostra
+          </ButtonLink>
+          {whatsappHref ? (
+            <a className="button button--secondary" href={whatsappHref} target="_blank" rel="noreferrer">
+              WhatsApp direto
+            </a>
+          ) : null}
+        </div>
+      </div>
+    </header>
+  );
+}
