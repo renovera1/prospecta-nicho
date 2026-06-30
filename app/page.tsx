@@ -135,7 +135,7 @@ export default function HomePage() {
             <p className="eyebrow">FAQ</p>
             <h2 className="h2">Antes de começar, você talvez queira saber.</h2>
             <ButtonLink href="/faq" variant="secondary">
-              Ver todas as d?vidas
+              Ver todas as dúvidas
             </ButtonLink>
           </div>
           <FAQAccordion items={homeFaq.slice(0, 5)} />

@@ -10,43 +10,43 @@ export const objectiveOptions = [
   "Consultoria B2B",
   "Certificado digital",
   "Seguros empresariais",
-  "Seguranca do trabalho",
+  "Segurança do trabalho",
   "Outro",
 ] as const;
 
 export const goalOptions = [
   "Encontrar novas empresas",
-  "Abrir uma nova regi?o",
+  "Abrir uma nova região",
   "Alimentar CRM",
   "Preparar campanha",
-  "Prospec??o via WhatsApp",
-  "Prospec??o por e-mail",
+  "Prospecção via WhatsApp",
+  "Prospecção por e-mail",
   "Criar carteira comercial",
   "Outro",
 ] as const;
 
 export const openedPeriodOptions = [
-  "ultimos 30 dias",
-  "ultimos 60 dias",
-  "ultimos 90 dias",
-  "ultimos 6 meses",
+  "últimos 30 dias",
+  "últimos 60 dias",
+  "últimos 90 dias",
+  "últimos 6 meses",
   "periodo personalizado",
   "sem filtro de abertura",
 ] as const;
 
-export const companySizeOptions = ["MEI", "ME", "EPP", "Medio porte", "Grande porte", "Qualquer porte"] as const;
+export const companySizeOptions = ["MEI", "ME", "EPP", "Médio porte", "Grande porte", "Qualquer porte"] as const;
 
 export const baseFieldOptions = [
   "CNPJ",
-  "Razao social",
+  "Razão social",
   "Nome fantasia",
   "CNAE",
   "Cidade",
   "Estado",
-  "Endereco comercial",
+  "Endereço comercial",
   "Porte",
   "Data de abertura",
-  "Situacao cadastral",
+  "Situação cadastral",
 ] as const;
 
 export const extraFieldOptions = [
@@ -55,7 +55,7 @@ export const extraFieldOptions = [
   "Site",
   "Redes empresariais",
   "Capital social",
-  "CNAEs secundarios",
+  "CNAEs secundários",
   "Indicadores de perfil comercial",
 ] as const;
 
@@ -70,7 +70,7 @@ export const builderSchema = z.object({
   secondaryCnaes: z.string().optional(),
   segmentNotes: z.string().optional(),
   state: z.string().min(2, "Informe o estado."),
-  city: z.string().min(2, "Informe a cidade ou regi?o principal."),
+  city: z.string().min(2, "Informe a cidade ou região principal."),
   region: z.string().optional(),
   district: z.string().optional(),
   cepStart: z.string().optional(),

@@ -27,6 +27,22 @@ const okRoutes = [
   "/compra/pendente",
   "/compra/erro",
   "/admin",
+  "/admin/login",
+  "/admin/conteudo",
+  "/admin/conteudo/home",
+  "/admin/produtos",
+  "/admin/segmentos",
+  "/admin/faq",
+  "/admin/menus",
+  "/admin/ctas",
+  "/admin/seo",
+  "/admin/midias",
+  "/admin/configuracoes",
+  "/admin/revisoes",
+  "/admin/leads",
+  "/admin/pedidos",
+  "/admin/preview",
+  "/admin/preview/share/token-de-homologacao",
 ];
 
 const redirects = ["/blog", "/conteudos", "/solucoes", "/solucoes/agencias-de-marketing", "/blog-6-duvidas.html"];

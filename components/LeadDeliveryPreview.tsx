@@ -13,13 +13,9 @@ export function LeadDeliveryPreview() {
       <div className="delivery-body">
         <div className="delivery-toolbar">
           <strong>ProspectaNicho / Entrega</strong>
-          <span>Campos visíveis</span>
           <span>Ativas</span>
           <span>ME e EPP</span>
-          <span>90 dias</span>
-          <span>Excel</span>
-          <span>CSV</span>
-          <span>Filtros salvos</span>
+          <span>Últimos 90 dias</span>
           <span>Exemplo ilustrativo</span>
         </div>
         <div className="delivery-row" aria-hidden="true">

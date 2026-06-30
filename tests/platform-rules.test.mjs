@@ -5,8 +5,8 @@ import { buildWhatsAppUrl } from "../lib/whatsapp.ts";
 import { productCatalog } from "../lib/products.ts";
 
 test("metadata default não usa localhost", () => {
-  const source = readFileSync("lib/site.ts", "utf8");
-  const fallbackLine = source.split("\n").find((line) => line.includes("url: process.env.NEXT_PUBLIC_SITE_URL"));
+  const source = readFileSync("lib/site-url.ts", "utf8");
+  const fallbackLine = source.split("\n").find((line) => line.includes("productionUrl"));
   assert.ok(fallbackLine);
   assert.equal(fallbackLine.includes("localhost"), false);
   assert.equal(fallbackLine.includes("127.0.0.1"), false);

@@ -1,17 +1,17 @@
 import type { BaseBuilderData } from "@/types/editor";
 
 const fallbackRows = [
-  ["Clinica A***", "Saude e est?tica", "Campinas", "ME", "05/2026", "Perfil ideal"],
-  ["Loja B***", "Comercio", "Jundiai", "EPP", "04/2026", "Nova empresa"],
-  ["Servico C***", "Servicos B2B", "Sorocaba", "ME", "06/2026", "Prioridade"],
+  ["Clínica A***", "Saúde e estética", "Campinas", "ME", "05/2026", "Perfil ideal"],
+  ["Loja B***", "Comércio", "Jundiaí", "EPP", "04/2026", "Nova empresa"],
+  ["Serviço C***", "Serviços B2B", "Sorocaba", "ME", "06/2026", "Prioridade"],
 ];
 
 export function LeadPreview({ data }: { data: BaseBuilderData }) {
-  const city = data.city || "Regi?o definida";
+  const city = data.city || "Região definida";
   const segment = data.segment || data.audience || "Segmento definido";
 
   const rows = fallbackRows.map((row, index) => {
-    if (index === 0) return ["Empresa A***", segment, city, data.companySize[0] || "ME", "Periodo filtrado", "Perfil ideal"];
+    if (index === 0) return ["Empresa A***", segment, city, data.companySize[0] || "ME", "Período filtrado", "Perfil ideal"];
     return row;
   });
 
@@ -19,7 +19,7 @@ export function LeadPreview({ data }: { data: BaseBuilderData }) {
     <div className="editor-preview" aria-label="Previa ilustrativa de entrega">
       <div className="sheet-head">
         <span>Previa de entrega</span>
-        <strong>Dados ficticios e mascarados</strong>
+        <strong>Dados fictícios e mascarados</strong>
       </div>
       <div className="preview-grid">
         {["Empresa", "Segmento", "Cidade", "Porte", "Abertura", "Status"].map((head) => (

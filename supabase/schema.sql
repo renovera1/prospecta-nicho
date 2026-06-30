@@ -125,7 +125,190 @@ create table if not exists public.suppression_list (
 create table if not exists public.admin_profiles (
   id uuid primary key references auth.users(id),
   created_at timestamptz not null default now(),
-  role text not null check (role in ('admin', 'operador', 'leitura'))
+  role text not null check (role in ('admin', 'editor', 'operador', 'leitura'))
+);
+
+create table if not exists public.site_settings (
+  id uuid primary key default gen_random_uuid(),
+  site_name text not null default 'ProspectaNicho',
+  site_url text not null,
+  support_email text,
+  whatsapp_number text,
+  preview_banner_enabled boolean not null default true,
+  preview_banner_text text,
+  default_seo_title text,
+  default_seo_description text,
+  default_og_image text,
+  analytics_enabled boolean not null default false,
+  maintenance_mode boolean not null default false,
+  updated_at timestamptz not null default now(),
+  updated_by uuid references auth.users(id)
+);
+
+create table if not exists public.navigation_items (
+  id uuid primary key default gen_random_uuid(),
+  label text not null,
+  destination text not null,
+  sort_order integer not null default 0,
+  is_visible_desktop boolean not null default true,
+  is_visible_mobile boolean not null default true,
+  cta_type text not null default 'internal',
+  icon text,
+  is_external boolean not null default false,
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.content_pages (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  title text not null,
+  status text not null default 'draft' check (status in ('draft', 'published', 'archived')),
+  template text not null,
+  published_at timestamptz,
+  updated_at timestamptz not null default now(),
+  updated_by uuid references auth.users(id)
+);
+
+create table if not exists public.content_sections (
+  id uuid primary key default gen_random_uuid(),
+  page_id uuid not null references public.content_pages(id) on delete cascade,
+  section_key text not null,
+  section_type text not null,
+  sort_order integer not null default 0,
+  is_visible boolean not null default true,
+  settings_json jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.content_entries (
+  id uuid primary key default gen_random_uuid(),
+  section_id uuid not null references public.content_sections(id) on delete cascade,
+  field_key text not null,
+  field_type text not null,
+  value_json jsonb not null default 'null'::jsonb,
+  draft_value_json jsonb,
+  status text not null default 'published' check (status in ('draft', 'published', 'archived')),
+  updated_at timestamptz not null default now(),
+  updated_by uuid references auth.users(id)
+);
+
+create table if not exists public.products (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  name text not null,
+  badge text,
+  price numeric(12,2),
+  price_label text,
+  description text,
+  recommended_for text,
+  fields text[] not null default '{}',
+  delivery_time text,
+  delivery_format text,
+  cta_label text,
+  checkout_url text,
+  fallback_whatsapp text,
+  status text not null default 'draft' check (status in ('rascunho', 'ativo', 'pausado', 'arquivado', 'draft')),
+  sort_order integer not null default 0,
+  featured boolean not null default false,
+  image_url text,
+  icon text,
+  seo_json jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now(),
+  updated_by uuid references auth.users(id)
+);
+
+create table if not exists public.product_features (
+  id uuid primary key default gen_random_uuid(),
+  product_id uuid not null references public.products(id) on delete cascade,
+  label text not null,
+  sort_order integer not null default 0
+);
+
+create table if not exists public.segment_presets (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  title text not null,
+  description text,
+  preset_json jsonb not null default '{}'::jsonb,
+  cta_label text,
+  sort_order integer not null default 0,
+  is_visible boolean not null default true,
+  image_url text,
+  seo_json jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.faq_items (
+  id uuid primary key default gen_random_uuid(),
+  question text not null,
+  answer text not null,
+  category text,
+  sort_order integer not null default 0,
+  is_visible boolean not null default true,
+  schema_enabled boolean not null default true,
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.cta_definitions (
+  id uuid primary key default gen_random_uuid(),
+  label text not null,
+  destination text not null,
+  kind text not null check (kind in ('internal', 'checkout', 'whatsapp', 'anchor', 'form', 'external')),
+  whatsapp_message text,
+  visual_variant text not null default 'primary',
+  size text not null default 'default',
+  icon text,
+  is_visible boolean not null default true,
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.seo_entries (
+  id uuid primary key default gen_random_uuid(),
+  route_path text unique not null,
+  title text,
+  meta_description text,
+  canonical text,
+  og_image text,
+  robots text,
+  schema_json jsonb not null default '{}'::jsonb,
+  noindex boolean not null default false,
+  nofollow boolean not null default false,
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.media_assets (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  url text not null,
+  alt text,
+  kind text not null,
+  width integer,
+  height integer,
+  metadata jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now(),
+  updated_by uuid references auth.users(id)
+);
+
+create table if not exists public.content_revisions (
+  id uuid primary key default gen_random_uuid(),
+  entity_type text not null,
+  entity_id uuid,
+  snapshot_json jsonb not null,
+  action text not null,
+  created_at timestamptz not null default now(),
+  created_by uuid references auth.users(id)
+);
+
+create table if not exists public.content_publications (
+  id uuid primary key default gen_random_uuid(),
+  entity_type text not null,
+  entity_id uuid,
+  revision_id uuid references public.content_revisions(id),
+  route_paths text[] not null default '{}',
+  status text not null default 'published',
+  created_at timestamptz not null default now(),
+  created_by uuid references auth.users(id)
 );
 
 alter table public.leads enable row level security;
@@ -139,6 +322,40 @@ alter table public.export_downloads enable row level security;
 alter table public.consents enable row level security;
 alter table public.suppression_list enable row level security;
 alter table public.admin_profiles enable row level security;
+alter table public.site_settings enable row level security;
+alter table public.navigation_items enable row level security;
+alter table public.content_pages enable row level security;
+alter table public.content_sections enable row level security;
+alter table public.content_entries enable row level security;
+alter table public.products enable row level security;
+alter table public.product_features enable row level security;
+alter table public.segment_presets enable row level security;
+alter table public.faq_items enable row level security;
+alter table public.cta_definitions enable row level security;
+alter table public.seo_entries enable row level security;
+alter table public.media_assets enable row level security;
+alter table public.content_revisions enable row level security;
+alter table public.content_publications enable row level security;
+
+create or replace function public.current_admin_role()
+returns text
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select role from public.admin_profiles where id = auth.uid()
+$$;
+
+create or replace function public.is_admin_role(allowed text[])
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select coalesce(public.current_admin_role() = any(allowed), false) or auth.role() = 'service_role'
+$$;
 
 create policy "service role manages leads" on public.leads for all using (auth.role() = 'service_role');
 create policy "service role manages custom requests" on public.custom_requests for all using (auth.role() = 'service_role');
@@ -151,3 +368,21 @@ create policy "service role manages export downloads" on public.export_downloads
 create policy "service role manages consents" on public.consents for all using (auth.role() = 'service_role');
 create policy "service role manages suppression list" on public.suppression_list for all using (auth.role() = 'service_role');
 create policy "admins read admin profiles" on public.admin_profiles for select using (auth.uid() = id or auth.role() = 'service_role');
+create policy "admins manage admin profiles" on public.admin_profiles for all using (public.is_admin_role(array['admin']));
+
+create policy "admins manage site settings" on public.site_settings for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage navigation items" on public.navigation_items for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage content pages" on public.content_pages for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage content sections" on public.content_sections for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage content entries" on public.content_entries for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage products" on public.products for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage product features" on public.product_features for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage segment presets" on public.segment_presets for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage faq items" on public.faq_items for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage cta definitions" on public.cta_definitions for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage seo entries" on public.seo_entries for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage media assets" on public.media_assets for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins read content revisions" on public.content_revisions for select using (public.is_admin_role(array['admin', 'editor', 'leitura']));
+create policy "admins write content revisions" on public.content_revisions for insert with check (public.is_admin_role(array['admin', 'editor']));
+create policy "admins read content publications" on public.content_publications for select using (public.is_admin_role(array['admin', 'editor', 'leitura']));
+create policy "admins write content publications" on public.content_publications for insert with check (public.is_admin_role(array['admin', 'editor']));

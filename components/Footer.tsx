@@ -3,6 +3,8 @@ import { Brand } from "@/components/Brand";
 import { products, site } from "@/lib/site";
 
 export function Footer() {
+  const audienceLinks = ["Agências", "Contabilidades", "Energia solar"];
+
   return (
     <footer className="footer">
       <div className="container-wide footer-grid">
@@ -24,9 +26,9 @@ export function Footer() {
         <div>
           <h3>Para quem é</h3>
           <p><Link href="/para-quem-e">Visão geral</Link></p>
-          <p><Link href="/montar-minha-base?segment=Ag%C3%AAncias">Agências</Link></p>
-          <p><Link href="/montar-minha-base?segment=Contabilidades">Contabilidades</Link></p>
-          <p><Link href="/montar-minha-base?segment=Energia%20solar">Energia solar</Link></p>
+          {audienceLinks.map((label) => (
+            <p key={label}><Link href={`/montar-minha-base?segment=${encodeURIComponent(label)}`}>{label}</Link></p>
+          ))}
         </div>
         <div>
           <h3>Suporte e legal</h3>

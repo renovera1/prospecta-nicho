@@ -1,45 +1,39 @@
 import type { Metadata } from "next";
+import { AdminShell } from "@/components/admin/AdminShell";
+import { AdminStatusCards } from "@/components/admin/AdminStatusCards";
+import { adminRoles, contentHealth } from "@/lib/content-studio";
 
 const checks = [
-  ["Supabase", Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)],
-  ["Resend", Boolean(process.env.RESEND_API_KEY)],
-  ["Mercado Pago", Boolean(process.env.MERCADO_PAGO_ACCESS_TOKEN)],
-  ["Asaas", Boolean(process.env.ASAAS_API_KEY)],
-  ["ClickHouse", Boolean(process.env.CLICKHOUSE_URL && process.env.CLICKHOUSE_USERNAME && process.env.CLICKHOUSE_PASSWORD)],
-  ["R2/S3", Boolean(process.env.R2_BUCKET && process.env.R2_ACCESS_KEY_ID && process.env.R2_SECRET_ACCESS_KEY)],
-  ["Redis/Fila", Boolean(process.env.REDIS_URL)],
-  ["Admin API Token", Boolean(process.env.ADMIN_API_TOKEN)],
+  { label: "Supabase", value: process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY ? "Configurado" : "Pendente", note: "Banco, Auth e RLS para conteúdo." },
+  { label: "Pagamentos", value: process.env.MERCADO_PAGO_ACCESS_TOKEN || process.env.ASAAS_API_KEY ? "Configurado" : "Pendente", note: "Checkout real depende de credenciais." },
+  { label: "WhatsApp", value: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ? "Configurado" : "Fallback ativo", note: "Sem número, CTAs seguem para contato." },
+  { label: "Preview", value: process.env.NEXT_PUBLIC_DEPLOY_ENV === "preview" ? "Preview" : "Produção", note: "Banner e robots seguem o ambiente." },
 ];
 
 export const metadata: Metadata = {
-  title: "Admin",
+  title: "Content Studio",
   robots: { index: false, follow: false },
 };
 
 export default function AdminPage() {
   return (
-    <section className="section">
-      <div className="container">
-        <p className="eyebrow">Área administrativa</p>
-        <h1 className="h1">Operação protegida da ProspectaNicho.</h1>
-        <p className="lead">
-          Esta tela não expõe dados comerciais. O painel completo depende de Supabase Auth, perfis administrativos e
-          RLS configurados no ambiente de produção.
-        </p>
-        <div className="card-grid" style={{ marginTop: 28 }}>
-          {checks.map(([label, ok]) => (
-            <article className="card" key={label as string}>
-              <span className="badge">{ok ? "Configurado" : "Pendente"}</span>
-              <h2 className="h3" style={{ marginTop: 12 }}>{label}</h2>
-              <p className="muted">
-                {ok
-                  ? "Variáveis mínimas presentes no ambiente."
-                  : "Configure as variáveis correspondentes antes de operar dados reais."}
-              </p>
-            </article>
+    <AdminShell title="Operação protegida da ProspectaNicho" eyebrow="Área administrativa">
+      <p className="lead">
+        Painel para governar conteúdo, produtos, CTAs, SEO, menus, FAQ, mídias, leads, pedidos e publicações sem editar
+        arquivos manualmente.
+      </p>
+      <AdminStatusCards items={[...checks, ...contentHealth]} />
+      <div className="admin-panel">
+        <h2 className="h3">Perfis e permissões</h2>
+        <div className="admin-table">
+          {adminRoles.map((item) => (
+            <div className="admin-table-row" key={item.role}>
+              <strong>{item.label}</strong>
+              <span>{item.permissions}</span>
+            </div>
           ))}
         </div>
       </div>
-    </section>
+    </AdminShell>
   );
 }

@@ -1,5 +1,6 @@
 import { ArrowRight, MessageCircle, ShoppingCart } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ProductVisual } from "@/components/ProductVisual";
 import type { Product } from "@/lib/site";
 import { isExternalHref, productHref, productPaymentLink, productPrimaryHref, site } from "@/lib/site";
 
@@ -11,6 +12,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className="card product-card">
+      <ProductVisual slug={product.slug} />
       <div>
         {product.badge ? <span className="badge">{product.badge}</span> : null}
         <h3 className="h3" style={{ marginTop: 14 }}>{product.name}</h3>

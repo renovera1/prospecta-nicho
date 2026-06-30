@@ -12,7 +12,7 @@ export function EditorSuccess({ data }: { data: BaseBuilderData }) {
     <section className="section editor-success">
       <div className="container">
         <div className="success-panel">
-          <span className="badge">Solicitacao enviada</span>
+          <span className="badge">Solicitação enviada</span>
           <h1 className="h2">Seu recorte foi enviado para valida??o.</h1>
           <p className="lead">{summarizeBuilder(data)}</p>
           <p>

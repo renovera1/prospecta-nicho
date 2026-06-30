@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "spellcheck": "node scripts/spellcheck.mjs",
+    "spellcheck": "node scripts/spellcheck.mjs && cspell \"app/**/*.{ts,tsx,md}\" \"components/**/*.{ts,tsx}\" \"lib/**/*.{ts,tsx}\"",
+    "check:links": "node --experimental-strip-types scripts/check-links.mjs",
+    "check:metadata": "node scripts/check-metadata.mjs",
+    "check:content": "node scripts/check-content.mjs",
     "test:editor": "node --experimental-strip-types --test tests/*.test.mjs",
     "test:e2e": "node scripts/routes-audit.mjs",
     "test": "npm run test:editor"
@@ -23,9 +26,11 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@cspell/dict-pt-br": "^2.4.2",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
+    "cspell": "^10.0.1",
     "eslint": "^9.17.0",
     "eslint-config-next": "^15.5.9",
     "typescript": "^5.7.2"

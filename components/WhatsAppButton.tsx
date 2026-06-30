@@ -12,7 +12,7 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noreferrer"
       aria-label="Falar com a ProspectaNicho no WhatsApp"
-      data-tooltip="Falar sobre meu p?blico"
+      data-tooltip="Falar sobre meu público"
     >
       <svg aria-hidden="true" width="25" height="25" viewBox="0 0 32 32" role="img">
         <path

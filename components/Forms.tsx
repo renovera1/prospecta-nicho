@@ -126,7 +126,7 @@ export function LeadForm({ mode }: Props) {
           <input id="cnae" {...register("cnae")} />
         </div>
         <div className="field">
-          <label htmlFor="quantity">Quantidade apr?ximada</label>
+          <label htmlFor="quantity">Quantidade aproximada</label>
           <input id="quantity" {...register("quantity")} />
         </div>
         <div className="field field--full">

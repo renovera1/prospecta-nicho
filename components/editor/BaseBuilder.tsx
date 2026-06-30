@@ -100,7 +100,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
     });
 
     if (!response.ok) {
-      setSubmitError("Nao foi possivel enviar agora. Revise os campos obrigatorios e tente novamente.");
+      setSubmitError("Não foi possível enviar agora. Revise os campos obrigatórios e tente novamente.");
       return;
     }
 
@@ -117,9 +117,9 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
         <div className="editor-main">
           <div className="section-kicker">
             <p className="eyebrow">Monte sua base</p>
-            <h1 className="h1">Transforme seu p?blico ideal em um recorte comercial claro.</h1>
+            <h1 className="h1">Transforme seu público ideal em um recorte comercial claro.</h1>
             <p className="lead">
-              Escolha segmento, regi?o, momento da empresa e formato de entrega. A equipe valida a disponibilidade
+              Escolha segmento, região, momento da empresa e formato de entrega. A equipe valida a disponibilidade
               antes de confirmar escopo e investimento final.
             </p>
           </div>
@@ -173,7 +173,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                     <input {...form.register("secondaryCnaes")} />
                   </label>
                   <label className="field field--full">
-                    Observacoes
+                    Observações
                     <textarea {...form.register("segmentNotes")} />
                   </label>
                 </div>
@@ -182,7 +182,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
 
             {currentStep === "region" ? (
               <div className="builder-panel">
-                <h2 className="h3">Regi?o e periodo</h2>
+                <h2 className="h3">Região e período</h2>
                 <div className="form-grid">
                   <label className="field">
                     Estado
@@ -193,7 +193,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                     <input {...form.register("city")} />
                   </label>
                   <label className="field">
-                    Regi?o
+                    Região
                     <input {...form.register("region")} />
                   </label>
                   <label className="field">
@@ -230,19 +230,19 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                 />
                 <div className="form-grid">
                   <label className="field">
-                    Situacao cadastral
+                    Situação cadastral
                     <select {...form.register("registrationStatus")}>
                       <option>ativa</option>
-                      <option>outras situacoes</option>
-                      <option>sem preferencia</option>
+                      <option>outras situações</option>
+                      <option>sem preferência</option>
                     </select>
                   </label>
                   <label className="field">
                     Capital social
                     <select {...form.register("capitalRange")}>
-                      <option>sem preferencia</option>
+                      <option>sem preferência</option>
                       <option>faixa baixa</option>
-                      <option>faixa intermediaria</option>
+                      <option>faixa intermediária</option>
                       <option>faixa elevada</option>
                       <option>personalizado</option>
                     </select>
@@ -256,7 +256,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                     </select>
                   </label>
                 </div>
-                <p className="editor-note">A disponibilidade de filtros e campos e confirmada apos valida??o do recorte.</p>
+                <p className="editor-note">A disponibilidade de filtros e campos é confirmada após validação do recorte.</p>
               </div>
             ) : null}
 
@@ -275,7 +275,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                   name="extraFields"
                   render={({ field }) => (
                     <FieldSelector
-                      title="Campos adicionais, quando disponiveis"
+                      title="Campos adicionais, quando disponíveis"
                       note="Os campos adicionais dependem de disponibilidade, origem e escopo contratado."
                       options={extraFieldOptions}
                       selected={field.value || []}
@@ -293,7 +293,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                   <label className="field">
                     Faixa de quantidade
                     <select {...form.register("quantityRange")}>
-                      <option>ate 100</option>
+                      <option>até 100</option>
                       <option>101 a 500</option>
                       <option>501 a 1.000</option>
                       <option>1.001 a 5.000</option>
@@ -307,11 +307,11 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                       <option>Excel</option>
                       <option>CSV</option>
                       <option>Google Sheets</option>
-                      <option>importacao para CRM, quando aplicavel</option>
+                      <option>importação para CRM, quando aplicável</option>
                     </select>
                   </label>
                   <label className="field field--full">
-                    Observacoes
+                    Observações
                     <textarea {...form.register("deliveryNotes")} />
                   </label>
                   <label className="field">
@@ -366,7 +366,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                 rel={whatsappHref ? "noopener noreferrer" : undefined}
               >
                 <MessageCircle size={18} />
-                Falar sobre meu p?blico
+                Falar sobre meu público
               </a>
             </div>
           </form>

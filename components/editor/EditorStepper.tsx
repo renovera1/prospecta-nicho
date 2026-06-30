@@ -5,7 +5,7 @@ import type { BuilderStep } from "@/types/editor";
 const steps: { id: BuilderStep; label: string }[] = [
   { id: "objective", label: "Objetivo" },
   { id: "segment", label: "Segmento" },
-  { id: "region", label: "Regi?o" },
+  { id: "region", label: "Região" },
   { id: "profile", label: "Perfil" },
   { id: "fields", label: "Campos" },
   { id: "delivery", label: "Entrega" },
