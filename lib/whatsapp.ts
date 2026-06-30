@@ -1,5 +1,5 @@
 export const defaultWhatsAppMessage =
-  "Ola, conheci a ProspectaNicho e gostaria de entender qual base faz mais sentido para minha operacao.";
+  "Ola, conheci a ProspectaNicho e gostaria de entender qual base faz mais sentido para minha opera??o.";
 
 export function getWhatsAppNumber() {
   return (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "").replace(/\D/g, "");

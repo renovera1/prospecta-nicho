@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "spellcheck": "node scripts/spellcheck.mjs",
     "test:editor": "node --experimental-strip-types --test tests/*.test.mjs",
+    "test:e2e": "node scripts/routes-audit.mjs",
     "test": "npm run test:editor"
   },
   "dependencies": {

@@ -27,23 +27,23 @@ export function applyPreset(data: BaseBuilderData, preset: SegmentPreset): BaseB
 
 export function summarizeBuilder(data: BaseBuilderData) {
   const size = data.companySize.length ? `porte ${data.companySize.join(" e ")}` : "porte a definir";
-  const city = data.city || data.region || "regiao definida";
+  const city = data.city || data.region || "região definida";
   return `${data.segment || data.audience} em ${city}, ${data.openedPeriod}, ${size}.`;
 }
 
 export function recommendProduct(data: Pick<BaseBuilderData, "audience" | "openedPeriod" | "segment">): ProductRecommendation {
   const audience = `${data.audience} ${data.segment}`.toLowerCase();
   if (audience.includes("contabilidade")) return "Base para Contabilidades";
-  if (audience.includes("agencia") || audience.includes("marketing")) return "Base para Agencias";
+  if (audience.includes("agência") || audience.includes("agencia") || audience.includes("marketing")) return "Base para Agências";
   if (data.openedPeriod.includes("30") || data.openedPeriod.includes("60") || data.openedPeriod.includes("90")) {
-    return "Base Empresas Recem-Abertas";
+    return "Base Empresas Recém-Abertas";
   }
   return "Base Personalizada";
 }
 
 export function estimateInvestment(recommendation: ProductRecommendation) {
-  if (recommendation === "Base Empresas Recem-Abertas") return "R$ 147,00";
-  if (recommendation === "Base para Agencias") return "R$ 197,00";
+  if (recommendation === "Base Empresas Recém-Abertas") return "R$ 147,00";
+  if (recommendation === "Base para Agências") return "R$ 197,00";
   if (recommendation === "Base para Contabilidades") return "R$ 197,00";
   return "A partir de R$ 497,00";
 }
@@ -72,12 +72,12 @@ export function restorePublicFilters(search: string, fallback: BaseBuilderData):
 
 export function createBuilderWhatsAppMessage(data: BaseBuilderData) {
   return [
-    "Ola, montei um recorte no site da ProspectaNicho e gostaria de validar a disponibilidade.",
-    `Meu objetivo e: ${data.goal || "a definir"}.`,
+    "Olá, montei um recorte no site da ProspectaNicho e gostaria de validar a disponibilidade.",
+    `Meu objetivo é: ${data.goal || "a definir"}.`,
     `Segmento: ${data.segment || data.audience || "a definir"}.`,
-    `Regiao: ${[data.city, data.state].filter(Boolean).join("/") || data.region || "a definir"}.`,
+    `Região: ${[data.city, data.state].filter(Boolean).join("/") || data.region || "a definir"}.`,
     `Porte: ${data.companySize.join(", ") || "a definir"}.`,
-    `Periodo: ${data.openedPeriod || "a definir"}.`,
+    `Período: ${data.openedPeriod || "a definir"}.`,
     `Quantidade: ${data.quantityRange || "a definir"}.`,
   ].join(" ");
 }

@@ -15,7 +15,8 @@ export const metadata: Metadata = {
   },
   description: site.description,
   icons: {
-    icon: "/assets/brand/favicon.svg",
+    icon: "/assets/brand/favicon.png",
+    apple: "/assets/brand/apple-touch-icon.png",
   },
   openGraph: {
     title: "ProspectaNicho",
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
     url: site.url,
     images: ["/assets/brand/og-image.png"],
   },
+  robots: process.env.NEXT_PUBLIC_DEPLOY_ENV === "preview" ? { index: false, follow: false } : undefined,
   twitter: {
     card: "summary_large_image",
     title: "ProspectaNicho",
@@ -38,6 +40,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     name: site.name,
     url: site.url,
     contactPoint: [{ "@type": "ContactPoint", contactType: "sales", email: site.email }],
+    logo: `${site.url}/assets/brand/logo-selected.png`,
   };
 
   return (

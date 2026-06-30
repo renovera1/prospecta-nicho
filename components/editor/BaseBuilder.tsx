@@ -43,6 +43,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
   });
   const data = form.watch();
   const currentIndex = steps.indexOf(currentStep);
+  const whatsappHref = createWhatsAppLink(defaultWhatsAppMessage);
 
   useEffect(() => {
     const saved = window.localStorage.getItem(storageKey);
@@ -116,9 +117,9 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
         <div className="editor-main">
           <div className="section-kicker">
             <p className="eyebrow">Monte sua base</p>
-            <h1 className="h1">Transforme seu publico ideal em um recorte comercial claro.</h1>
+            <h1 className="h1">Transforme seu p?blico ideal em um recorte comercial claro.</h1>
             <p className="lead">
-              Escolha segmento, regiao, momento da empresa e formato de entrega. A equipe valida a disponibilidade
+              Escolha segmento, regi?o, momento da empresa e formato de entrega. A equipe valida a disponibilidade
               antes de confirmar escopo e investimento final.
             </p>
           </div>
@@ -128,7 +129,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
           <form className="builder-form" onSubmit={form.handleSubmit(submit)}>
             {currentStep === "objective" ? (
               <div className="builder-panel">
-                <h2 className="h3">Para quem voce quer vender?</h2>
+                <h2 className="h3">Para quem voc? quer vender?</h2>
                 <div className="option-grid">
                   {objectiveOptions.map((option) => (
                     <label key={option}>
@@ -181,7 +182,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
 
             {currentStep === "region" ? (
               <div className="builder-panel">
-                <h2 className="h3">Regiao e periodo</h2>
+                <h2 className="h3">Regi?o e periodo</h2>
                 <div className="form-grid">
                   <label className="field">
                     Estado
@@ -192,7 +193,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                     <input {...form.register("city")} />
                   </label>
                   <label className="field">
-                    Regiao
+                    Regi?o
                     <input {...form.register("region")} />
                   </label>
                   <label className="field">
@@ -255,7 +256,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                     </select>
                   </label>
                 </div>
-                <p className="editor-note">A disponibilidade de filtros e campos e confirmada apos validacao do recorte.</p>
+                <p className="editor-note">A disponibilidade de filtros e campos e confirmada apos valida??o do recorte.</p>
               </div>
             ) : null}
 
@@ -350,7 +351,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
               {currentStep === "delivery" ? (
                 <button className="button button--primary" type="submit" disabled={form.formState.isSubmitting}>
                   <CheckCircle2 size={18} />
-                  Enviar meu recorte para validacao
+                  Enviar meu recorte para valida??o
                 </button>
               ) : (
                 <button className="button button--primary" type="button" onClick={nextStep}>
@@ -358,9 +359,14 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                   <ArrowRight size={18} />
                 </button>
               )}
-              <a className="button button--secondary" href={createWhatsAppLink(defaultWhatsAppMessage)} target="_blank" rel="noreferrer">
+              <a
+                className="button button--secondary"
+                href={whatsappHref || "/contato"}
+                target={whatsappHref ? "_blank" : undefined}
+                rel={whatsappHref ? "noopener noreferrer" : undefined}
+              >
                 <MessageCircle size={18} />
-                Falar sobre meu publico
+                Falar sobre meu p?blico
               </a>
             </div>
           </form>

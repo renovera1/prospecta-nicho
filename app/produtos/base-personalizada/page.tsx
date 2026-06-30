@@ -14,7 +14,7 @@ export default function CustomBasePage() {
         <SectionTitle
           eyebrow="Sob demanda"
           title="Solicite uma Base Personalizada"
-          text="Informe nicho, região, datas, porte, quantidade aproximada e objetivo comercial. A equipe confirma escopo, viabilidade e prazo antes da entrega."
+          text="Informe nicho, região, datas, porte, quantidade apr?ximada e objetivo comercial. A equipe confirma escopo, viabilidade e prazo antes da entrega."
         />
         <LeadForm mode="custom" />
       </div>

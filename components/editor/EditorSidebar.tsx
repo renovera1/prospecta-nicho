@@ -29,7 +29,7 @@ export function EditorSidebar({ data, onClear }: Props) {
         <dl className="summary-list">
           <div><dt>Objetivo</dt><dd>{data.goal || "A definir"}</dd></div>
           <div><dt>Segmento</dt><dd>{data.segment || data.audience || "A definir"}</dd></div>
-          <div><dt>Regiao</dt><dd>{[data.city, data.state].filter(Boolean).join(" / ") || data.region || "A definir"}</dd></div>
+          <div><dt>Regi?o</dt><dd>{[data.city, data.state].filter(Boolean).join(" / ") || data.region || "A definir"}</dd></div>
           <div><dt>Porte</dt><dd>{data.companySize.join(", ") || "A definir"}</dd></div>
           <div><dt>Periodo</dt><dd>{data.openedPeriod || "A definir"}</dd></div>
           <div><dt>Volume</dt><dd>{data.quantityRange || "A definir"}</dd></div>

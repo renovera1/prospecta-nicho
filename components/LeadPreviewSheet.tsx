@@ -1,7 +1,7 @@
 const rows = [
-  ["Studio Clara", "Estetica", "Campinas", "9602-5/02", "ME", "05/2026", "site", "Nova empresa"],
+  ["Studio Clara", "Est?tica", "Campinas", "9602-5/02", "ME", "05/2026", "site", "Nova empresa"],
   ["Nexo Solar", "Energia", "Ribeirao", "4321-5/00", "EPP", "04/2026", "comercial@", "Perfil ideal"],
-  ["Alpha Food", "Alimentacao", "Jundiai", "5611-2/01", "ME", "06/2026", "site", "Prioridade"],
+  ["Alpha Food", "Alimenta??o", "Jundiai", "5611-2/01", "ME", "06/2026", "site", "Prioridade"],
   ["Vertice ERP", "Sistemas", "Sorocaba", "6201-5/01", "EPP", "03/2026", "contato@", "Em expansao"],
 ];
 

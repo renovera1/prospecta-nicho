@@ -1,6 +1,6 @@
 "use client";
 
-import { Send } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { isExternalHref, site } from "@/lib/site";
 import { trackEvent } from "@/lib/tracking";
@@ -98,8 +98,8 @@ export function HomeSampleForm() {
       </label>
       {error ? <span className="error">{error}</span> : null}
       <button className="button button--primary" type="submit" disabled={loading}>
-        <Send size={18} />
         {loading ? "Enviando..." : "Quero receber minha amostra grátis agora"}
+        <ArrowRight size={18} />
       </button>
       <p>Sem cartão. Sem compromisso. Você valida o formato antes de contratar uma base.</p>
     </form>

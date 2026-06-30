@@ -45,8 +45,8 @@ export type BaseBuilderData = {
 };
 
 export type ProductRecommendation =
-  | "Base Empresas Recem-Abertas"
-  | "Base para Agencias"
+  | "Base Empresas Recém-Abertas"
+  | "Base para Agências"
   | "Base para Contabilidades"
   | "Base Personalizada";
 

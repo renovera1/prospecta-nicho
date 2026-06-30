@@ -11,7 +11,7 @@ export default function ParaQuemEPage() {
   return (
     <>
       <section className="hero">
-        <div className="container">
+        <div className="container-wide">
           <p className="eyebrow">Para quem é</p>
           <h1 className="h1">Recortes comerciais para operações B2B que precisam vender com foco.</h1>
           <p className="lead">
@@ -25,15 +25,17 @@ export default function ParaQuemEPage() {
         </div>
       </section>
       <section className="section section--light">
-        <div className="container card-grid">
+        <div className="container-wide card-grid">
           {solutions.map((solution) => {
             const Icon = solution.icon;
             return (
               <article className="card" key={solution.slug}>
-                <Icon size={28} />
+                <Icon size={28} aria-hidden="true" />
                 <h2 className="h3">{solution.title}</h2>
                 <p className="muted">{solution.pain}</p>
-                <ButtonLink href={`/solucoes/${solution.slug}`} variant="secondary">Ver campos e detalhes</ButtonLink>
+                <ButtonLink href={`/montar-minha-base?segment=${encodeURIComponent(solution.title)}`} variant="secondary">
+                  Montar recorte para este segmento
+                </ButtonLink>
               </article>
             );
           })}

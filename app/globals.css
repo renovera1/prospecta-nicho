@@ -212,14 +212,23 @@ textarea {
 .brand {
   display: inline-flex;
   align-items: center;
-  width: 226px;
+  width: clamp(220px, 16vw, 250px);
   max-width: 48vw;
+}
+
+.footer .brand {
+  width: 250px;
+  border-radius: 14px;
+  background: var(--white);
+  padding: 10px 12px;
 }
 
 .brand img {
   display: block;
   width: 100%;
+  max-height: 46px;
   height: auto;
+  object-fit: contain;
 }
 
 .nav-links {
@@ -525,8 +534,8 @@ textarea {
 
 .whatsapp {
   position: fixed;
-  right: 18px;
-  bottom: 18px;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
   z-index: 45;
   width: 54px;
   height: 54px;
@@ -535,6 +544,27 @@ textarea {
   border-radius: 999px;
   background: #25d366;
   box-shadow: 0 16px 36px rgba(37, 211, 102, 0.28);
+}
+
+.preview-banner {
+  position: fixed;
+  left: 50%;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 43;
+  transform: translateX(-50%);
+  border: 1px solid rgba(11, 46, 89, 0.14);
+  border-radius: 999px;
+  color: var(--petrol);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 28px rgba(11, 46, 89, 0.12);
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  backdrop-filter: blur(12px);
+}
+
+.preview-banner + .whatsapp {
+  bottom: max(64px, calc(env(safe-area-inset-bottom) + 64px));
 }
 
 .whatsapp::before {
@@ -917,15 +947,19 @@ textarea {
 
 .product-visual img {
   position: absolute;
-  right: -20px;
-  bottom: -32px;
-  width: 118px;
-  opacity: 0.18;
+  right: 14px;
+  bottom: 10px;
+  width: 112px;
+  opacity: 0.07;
 }
 
 .product-visual svg {
   position: relative;
   z-index: 1;
+}
+
+.product-visual .radar-pulse {
+  display: none;
 }
 
 .segment-band .brand-watermark,
@@ -936,9 +970,15 @@ textarea {
 
 .segment-labels {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   margin: 28px 0;
+}
+
+.segment-labels a::after {
+  content: "→";
+  color: var(--teal-soft);
+  font-weight: 900;
 }
 
 .segment-labels a {
@@ -1715,9 +1755,9 @@ textarea {
 .delivery-toolbar,
 .delivery-row {
   display: grid;
-  grid-template-columns: 1.25fr 0.9fr 0.75fr 0.8fr 0.7fr 0.7fr 0.8fr 1fr 0.9fr;
+  grid-template-columns: 1.25fr 0.95fr 0.85fr 0.8fr 0.7fr 0.75fr 0.7fr 0.95fr;
   gap: 0;
-  min-width: 1080px;
+  min-width: 940px;
 }
 
 .delivery-toolbar {
@@ -1745,6 +1785,10 @@ textarea {
 
 .delivery-row:hover {
   background: #f8fcfd;
+}
+
+.delivery-card-list {
+  display: none;
 }
 
 .status-pill {
@@ -1975,6 +2019,23 @@ textarea {
     grid-column: span 6;
     min-height: auto;
   }
+
+  .segment-labels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .delivery-toolbar,
+  .delivery-row {
+    grid-template-columns: 1.2fr 0.95fr 0.85fr 0.75fr 0.7fr 0.95fr;
+    min-width: 720px;
+  }
+
+  .delivery-toolbar > :nth-child(4),
+  .delivery-toolbar > :nth-child(5),
+  .delivery-row > :nth-child(4),
+  .delivery-row > :nth-child(5) {
+    display: none;
+  }
 }
 
 @media (max-width: 620px) {
@@ -2034,6 +2095,33 @@ textarea {
   .product-signal-card,
   .product-signal-card--featured {
     grid-column: 1 / -1;
+  }
+
+  .segment-labels {
+    grid-template-columns: 1fr;
+  }
+
+  .delivery-body {
+    display: none;
+  }
+
+  .delivery-card-list {
+    display: grid;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .delivery-card {
+    display: grid;
+    gap: 6px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #f8fcfd;
+    padding: 14px;
+  }
+
+  .delivery-card strong {
+    color: var(--navy);
   }
 
   .editor-stepper,

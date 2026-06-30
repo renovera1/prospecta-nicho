@@ -15,5 +15,6 @@ coverage
 .codex
 work
 outputs
+artifacts/visual-qc/
 __pycache__/
 *.py[cod]

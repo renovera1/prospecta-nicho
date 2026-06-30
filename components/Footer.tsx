@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Brand } from "@/components/Brand";
-import { products, site, solutions } from "@/lib/site";
+import { products, site } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -24,11 +24,9 @@ export function Footer() {
         <div>
           <h3>Para quem é</h3>
           <p><Link href="/para-quem-e">Visão geral</Link></p>
-          {solutions.slice(0, 3).map((solution) => (
-            <p key={solution.slug}>
-              <Link href={`/solucoes/${solution.slug}`}>{solution.slug.replaceAll("-", " ")}</Link>
-            </p>
-          ))}
+          <p><Link href="/montar-minha-base?segment=Ag%C3%AAncias">Agências</Link></p>
+          <p><Link href="/montar-minha-base?segment=Contabilidades">Contabilidades</Link></p>
+          <p><Link href="/montar-minha-base?segment=Energia%20solar">Energia solar</Link></p>
         </div>
         <div>
           <h3>Suporte e legal</h3>

@@ -6,7 +6,7 @@ export const objectiveOptions = [
   "Energia solar",
   "ERP e sistemas",
   "Maquininhas",
-  "Comunicacao visual",
+  "Comunica??o visual",
   "Consultoria B2B",
   "Certificado digital",
   "Seguros empresariais",
@@ -16,11 +16,11 @@ export const objectiveOptions = [
 
 export const goalOptions = [
   "Encontrar novas empresas",
-  "Abrir uma nova regiao",
+  "Abrir uma nova regi?o",
   "Alimentar CRM",
   "Preparar campanha",
-  "Prospeccao via WhatsApp",
-  "Prospeccao por e-mail",
+  "Prospec??o via WhatsApp",
+  "Prospec??o por e-mail",
   "Criar carteira comercial",
   "Outro",
 ] as const;
@@ -60,7 +60,7 @@ export const extraFieldOptions = [
 ] as const;
 
 export const builderSchema = z.object({
-  audience: z.string().min(2, "Escolha para quem voce quer vender."),
+  audience: z.string().min(2, "Escolha para quem voc? quer vender."),
   customAudience: z.string().optional(),
   goal: z.string().min(2, "Escolha um objetivo comercial."),
   customGoal: z.string().optional(),
@@ -70,7 +70,7 @@ export const builderSchema = z.object({
   secondaryCnaes: z.string().optional(),
   segmentNotes: z.string().optional(),
   state: z.string().min(2, "Informe o estado."),
-  city: z.string().min(2, "Informe a cidade ou regiao principal."),
+  city: z.string().min(2, "Informe a cidade ou regi?o principal."),
   region: z.string().optional(),
   district: z.string().optional(),
   cepStart: z.string().optional(),

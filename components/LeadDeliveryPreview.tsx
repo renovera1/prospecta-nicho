@@ -1,10 +1,10 @@
-const columns = ["Empresa", "Segmento", "Cidade", "CNAE", "Porte", "Abertura", "Site", "Contato empresarial", "Status"];
+const columns = ["Empresa", "Segmento", "Cidade", "CNAE", "Porte", "Abertura", "Site", "Status"];
 
 const rows = [
-  ["Clínica A***", "Saúde", "Campinas", "8630-5/03", "ME", "05/2026", "site", "contato@", "Nova empresa"],
-  ["Nexo S***", "Energia solar", "Ribeirão Preto", "4321-5/00", "EPP", "04/2026", "site", "comercial@", "Perfil ideal"],
-  ["Alpha F***", "Alimentação", "Jundiaí", "5611-2/01", "ME", "06/2026", "site", "atendimento@", "Prioridade"],
-  ["Vértice E***", "Sistemas", "Sorocaba", "6201-5/01", "EPP", "03/2026", "site", "contato@", "Em expansão"],
+  ["Clínica A***", "Saúde", "Campinas", "8630-5/03", "ME", "05/2026", "site", "Nova empresa"],
+  ["Nexo S***", "Energia solar", "Ribeirão Preto", "4321-5/00", "EPP", "04/2026", "site", "Perfil ideal"],
+  ["Alpha F***", "Alimentação", "Jundiaí", "5611-2/01", "ME", "06/2026", "site", "Prioridade"],
+  ["Vértice E***", "Sistemas", "Sorocaba", "6201-5/01", "EPP", "03/2026", "site", "Em expansão"],
 ];
 
 export function LeadDeliveryPreview() {
@@ -28,9 +28,19 @@ export function LeadDeliveryPreview() {
         {rows.map((row) => (
           <div className="delivery-row" key={row.join("-")}>
             {row.map((cell, index) => (
-              index === 8 ? <span className="status-pill" key={cell}>{cell}</span> : <span key={`${cell}-${index}`}>{cell}</span>
+              index === 7 ? <span className="status-pill" key={cell}>{cell}</span> : <span title={cell} key={`${cell}-${index}`}>{cell}</span>
             ))}
           </div>
+        ))}
+      </div>
+      <div className="delivery-card-list">
+        {rows.map((row) => (
+          <article className="delivery-card" key={row.join("-")}>
+            <strong>{row[0]}</strong>
+            <span>{row[1]} - {row[2]}</span>
+            <span>Abertura: {row[5]}</span>
+            <span className="status-pill">{row[7]}</span>
+          </article>
         ))}
       </div>
       <p className="delivery-note">

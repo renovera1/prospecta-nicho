@@ -13,7 +13,7 @@ export function EditorSuccess({ data }: { data: BaseBuilderData }) {
       <div className="container">
         <div className="success-panel">
           <span className="badge">Solicitacao enviada</span>
-          <h1 className="h2">Seu recorte foi enviado para validacao.</h1>
+          <h1 className="h2">Seu recorte foi enviado para valida??o.</h1>
           <p className="lead">{summarizeBuilder(data)}</p>
           <p>
             A disponibilidade de filtros e campos sera confirmada antes da entrega. Se quiser acelerar o atendimento,

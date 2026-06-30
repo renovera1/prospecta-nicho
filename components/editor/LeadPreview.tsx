@@ -1,13 +1,13 @@
 import type { BaseBuilderData } from "@/types/editor";
 
 const fallbackRows = [
-  ["Clinica A***", "Saude e estetica", "Campinas", "ME", "05/2026", "Perfil ideal"],
+  ["Clinica A***", "Saude e est?tica", "Campinas", "ME", "05/2026", "Perfil ideal"],
   ["Loja B***", "Comercio", "Jundiai", "EPP", "04/2026", "Nova empresa"],
   ["Servico C***", "Servicos B2B", "Sorocaba", "ME", "06/2026", "Prioridade"],
 ];
 
 export function LeadPreview({ data }: { data: BaseBuilderData }) {
-  const city = data.city || "Regiao definida";
+  const city = data.city || "Regi?o definida";
   const segment = data.segment || data.audience || "Segmento definido";
 
   const rows = fallbackRows.map((row, index) => {

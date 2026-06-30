@@ -29,7 +29,7 @@ const baseData = {
 };
 
 test("recomenda produto a partir do recorte", () => {
-  assert.equal(recommendProduct(baseData), "Base para Agencias");
+  assert.equal(recommendProduct(baseData), "Base para Agências");
   assert.equal(recommendProduct({ ...baseData, audience: "Contabilidades" }), "Base para Contabilidades");
 });
 

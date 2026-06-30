@@ -7,7 +7,7 @@ type Props = {
 
 export const metadata: Metadata = {
   title: "Monte sua base",
-  description: "Transforme seu publico ideal em um recorte comercial claro para prospeccao B2B.",
+  description: "Transforme seu p?blico ideal em um recorte comercial claro para prospec??o B2B.",
 };
 
 export default async function MontarMinhaBasePage({ searchParams }: Props) {

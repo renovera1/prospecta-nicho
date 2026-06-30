@@ -11,7 +11,7 @@ export const defaultBuilderData: BaseBuilderData = {
   segmentNotes: "",
   state: "SP",
   city: "Campinas",
-  region: "Campinas + regiao",
+  region: "Campinas + regi?o",
   district: "",
   cepStart: "",
   cepEnd: "",
@@ -46,7 +46,7 @@ export const segmentPresets: SegmentPreset[] = [
     goal: "Preparar campanha",
     openedPeriod: "ultimos 90 dias",
     companySize: ["ME", "EPP"],
-    cues: ["Empresas recem-abertas", "Regiao definida pelo usuario", "Interesse em presenca digital"],
+    cues: ["Empresas rec?m-abertas", "Regi?o definida pelo usuario", "Interesse em presenca digital"],
   },
   {
     id: "contabilidades",
@@ -57,7 +57,7 @@ export const segmentPresets: SegmentPreset[] = [
     goal: "Criar carteira comercial",
     openedPeriod: "ultimos 90 dias",
     companySize: ["ME", "EPP"],
-    cues: ["Empresas abertas recentemente", "ME e EPP", "Regiao definida pelo usuario"],
+    cues: ["Empresas abertas recentemente", "ME e EPP", "Regi?o definida pelo usuario"],
   },
   {
     id: "energia-solar",
@@ -65,10 +65,10 @@ export const segmentPresets: SegmentPreset[] = [
     description: "Empresas com consumo potencial em comercio, servicos, industrias leves e agro.",
     audience: "Energia solar",
     segment: "Comercio, servicos, industrias leves e agronegocio",
-    goal: "Abrir uma nova regiao",
+    goal: "Abrir uma nova regi?o",
     openedPeriod: "sem filtro de abertura",
     companySize: ["ME", "EPP", "Medio porte"],
-    cues: ["Consumo potencial", "Regiao definida pelo usuario", "Atividades compativeis"],
+    cues: ["Consumo potencial", "Regi?o definida pelo usuario", "Atividades compativeis"],
   },
   {
     id: "erp",
@@ -79,6 +79,6 @@ export const segmentPresets: SegmentPreset[] = [
     goal: "Alimentar CRM",
     openedPeriod: "sem filtro de abertura",
     companySize: ["ME", "EPP"],
-    cues: ["Porte ME/EPP", "CNAE definido pelo usuario", "Regiao definida pelo usuario"],
+    cues: ["Porte ME/EPP", "CNAE definido pelo usuario", "Regi?o definida pelo usuario"],
   },
 ];

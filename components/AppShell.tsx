@@ -4,16 +4,10 @@ import { usePathname } from "next/navigation";
 import { CookieBanner } from "@/components/CookieBanner";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { PreviewBanner } from "@/components/PreviewBanner";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 
-const legacyRoutes = new Set([
-  "/sobre",
-  "/insights",
-  "/blog-direitos-concessionaria.html",
-  "/blog-nova-regulamentacao.html",
-  "/blog-6-duvidas.html",
-  "/blog-aterramento.html",
-]);
+const legacyRoutes = new Set<string>([]);
 
 export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
@@ -27,6 +21,7 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
       <Header />
       <main>{children}</main>
       <Footer />
+      <PreviewBanner />
       <WhatsAppButton />
       <CookieBanner />
     </div>
