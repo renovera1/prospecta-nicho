@@ -549,8 +549,8 @@ textarea {
 .preview-banner {
   position: fixed;
   left: 50%;
-  bottom: max(14px, env(safe-area-inset-bottom));
-  z-index: 43;
+  top: 88px;
+  z-index: 39;
   transform: translateX(-50%);
   border: 1px solid rgba(11, 46, 89, 0.14);
   border-radius: 999px;
@@ -561,10 +561,6 @@ textarea {
   font-size: 0.78rem;
   font-weight: 900;
   backdrop-filter: blur(12px);
-}
-
-.preview-banner + .whatsapp {
-  bottom: max(64px, calc(env(safe-area-inset-bottom) + 64px));
 }
 
 .whatsapp::before {
