@@ -31,6 +31,8 @@ const okRoutes = [
   "/admin/conteudo",
   "/admin/conteudo/home",
   "/admin/produtos",
+  "/admin/produtos/empresas-recem-abertas",
+  "/admin/precos",
   "/admin/segmentos",
   "/admin/faq",
   "/admin/menus",
@@ -41,6 +43,7 @@ const okRoutes = [
   "/admin/revisoes",
   "/admin/leads",
   "/admin/pedidos",
+  "/admin/exportacoes",
   "/admin/preview",
   "/admin/preview/share/token-de-homologacao",
 ];

@@ -14,7 +14,7 @@ Data: 2026-06-30
 
 - URLs absolutas agora passam por `lib/site-url.ts`, com bloqueio de `localhost`, `127.0.0.1`, `:3000` e `:3001` em URL pública.
 - CTAs têm resolvedor central em `lib/cta-resolver.ts`, com bloqueio de link vazio, `javascript:` e URL local.
-- Logo passou a ter componente único em `components/BrandLogo.tsx`, usando somente `logo-selected.png` e `logo-selected-dark.png`.
+- Logo passou a ter componente único em `components/BrandLogo.tsx`, usando a matriz oficial e os assets `logo-horizontal.png`, `logo-horizontal-dark-bg.png` e `logo-symbol.png`.
 - Cards de produto passam por `components/ProductVisual.tsx`, com um ícone principal e marca d'água CSS abaixo de 0.06 de opacidade.
 - Prévia de entrega removeu itens excessivos da toolbar e manteve somente status ativo, porte, janela temporal e aviso ilustrativo.
 - Content Studio foi criado com edição, preview responsivo, limites editoriais, autosave visual e publicação com revalidação segura.

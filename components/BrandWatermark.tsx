@@ -5,6 +5,14 @@ type Props = {
 };
 
 export function BrandWatermark({ tone = "dark" }: Props) {
-  const src = tone === "light" ? "/assets/brand/shield-icon-light.svg" : "/assets/brand/shield-icon.svg";
-  return <Image className="brand-watermark" src={src} alt="" width={360} height={420} aria-hidden="true" />;
+  return (
+    <Image
+      className={`brand-watermark brand-watermark--${tone}`}
+      src="/assets/brand/logo-symbol.png"
+      alt=""
+      width={295}
+      height={305}
+      aria-hidden="true"
+    />
+  );
 }

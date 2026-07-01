@@ -34,6 +34,7 @@ export const contentStudioNav = [
   { href: "/admin", label: "Visão geral" },
   { href: "/admin/conteudo", label: "Conteúdo" },
   { href: "/admin/produtos", label: "Produtos" },
+  { href: "/admin/precos", label: "Preços" },
   { href: "/admin/segmentos", label: "Segmentos" },
   { href: "/admin/faq", label: "FAQ" },
   { href: "/admin/menus", label: "Menus" },
@@ -44,6 +45,7 @@ export const contentStudioNav = [
   { href: "/admin/revisoes", label: "Revisões" },
   { href: "/admin/leads", label: "Leads" },
   { href: "/admin/pedidos", label: "Pedidos" },
+  { href: "/admin/exportacoes", label: "Exportações" },
   { href: "/admin/preview", label: "Preview" },
 ];
 
@@ -77,8 +79,12 @@ export const adminProducts = products.map((product, index) => ({
   price: product.price,
   badge: product.badge || "Catálogo",
   description: product.description,
-  order: index + 1,
+  image: "/assets/brand/logo-symbol.png",
+  cta: product.homeCta || "Escolher esta base",
   checkout: product.paymentEnv || "WhatsApp/fallback",
+  order: index + 1,
+  featured: product.slug === "empresas-recem-abertas",
+  updatedAt: "2026-07-01",
 }));
 
 export const adminFaq = homeFaq.map((item, index) => ({
@@ -89,10 +95,13 @@ export const adminFaq = homeFaq.map((item, index) => ({
 }));
 
 export const mediaAssets = [
-  { name: "Logo principal", path: "/assets/brand/logo-selected.png", type: "brand" },
-  { name: "Logo fundo escuro", path: "/assets/brand/logo-selected-dark.png", type: "brand" },
+  { name: "Logo matriz", path: "/assets/brand/logo-master-reference.png", type: "brand" },
+  { name: "Logo principal", path: "/assets/brand/logo-horizontal.png", type: "brand" },
+  { name: "Logo fundo escuro", path: "/assets/brand/logo-horizontal-dark-bg.png", type: "brand" },
+  { name: "Símbolo", path: "/assets/brand/logo-symbol.png", type: "brand" },
   { name: "Favicon", path: "/assets/brand/favicon.png", type: "icon" },
   { name: "Open Graph", path: "/assets/brand/og-image.png", type: "social" },
+  { name: "Brand cover", path: "/assets/brand/brand-cover.png", type: "social" },
 ];
 
 export const contentHealth = [

@@ -8,3 +8,11 @@
 | leitura | Apenas visualização |
 
 Nunca exponha `SUPABASE_SERVICE_ROLE_KEY` no frontend.
+
+## Segurança operacional
+
+- Editor não altera pagamentos.
+- Operador não altera conteúdo publicado.
+- Preview externo é somente leitura.
+- Exports exigem pedido aprovado e links temporários.
+- Chaves ficam somente em variáveis de ambiente.

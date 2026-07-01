@@ -40,7 +40,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     name: site.name,
     url: site.url,
     contactPoint: [{ "@type": "ContactPoint", contactType: "sales", email: site.email }],
-    logo: `${site.url}/assets/brand/logo-selected.png`,
+    logo: `${site.url}/assets/brand/logo-horizontal.png`,
   };
 
   return (

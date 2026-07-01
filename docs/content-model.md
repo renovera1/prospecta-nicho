@@ -8,6 +8,7 @@ Tabelas principais:
 - `content_sections`
 - `content_entries`
 - `products`
+- `product_price_history`
 - `product_features`
 - `segment_presets`
 - `faq_items`
@@ -16,6 +17,8 @@ Tabelas principais:
 - `media_assets`
 - `content_revisions`
 - `content_publications`
+- `preview_links`
+- `sample_requests`
 - `admin_profiles`
 - `audit_logs`
 

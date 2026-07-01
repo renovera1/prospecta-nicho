@@ -1,0 +1,36 @@
+:root {
+  --content-reading: 760px;
+  --content-default: 1360px;
+  --content-wide: 1600px;
+  --gutter-mobile: 20px;
+  --gutter-tablet: 40px;
+  --gutter-desktop: 72px;
+  --gutter-wide: 104px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 104px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --navy-deep: #061e3a;
+  --navy: #0b2e59;
+  --navy-soft: #123b5d;
+  --teal: #0fa3a6;
+  --teal-soft: #bff5ee;
+  --canvas: #f5f8fb;
+  --white: #ffffff;
+  --ink: #102334;
+  --muted: #66768a;
+  --line: #dce6ed;
+  --whatsapp: #25d366;
+}

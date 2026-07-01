@@ -73,6 +73,20 @@ create table if not exists public.contact_requests (
   consent boolean not null default true
 );
 
+create table if not exists public.sample_requests (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  name text not null,
+  company text,
+  email text not null,
+  whatsapp text,
+  niche text,
+  city text,
+  status text not null default 'new',
+  consent boolean not null default true,
+  metadata jsonb not null default '{}'::jsonb
+);
+
 create table if not exists public.payments (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
@@ -225,6 +239,20 @@ create table if not exists public.product_features (
   sort_order integer not null default 0
 );
 
+create table if not exists public.product_price_history (
+  id uuid primary key default gen_random_uuid(),
+  product_id uuid not null references public.products(id) on delete cascade,
+  previous_price numeric(12,2),
+  new_price numeric(12,2) not null,
+  promotional_price numeric(12,2),
+  starts_at timestamptz,
+  ends_at timestamptz,
+  internal_reason text not null,
+  status text not null default 'scheduled' check (status in ('draft', 'scheduled', 'active', 'expired', 'cancelled')),
+  created_at timestamptz not null default now(),
+  created_by uuid references auth.users(id)
+);
+
 create table if not exists public.segment_presets (
   id uuid primary key default gen_random_uuid(),
   slug text unique not null,
@@ -311,11 +339,31 @@ create table if not exists public.content_publications (
   created_by uuid references auth.users(id)
 );
 
+create table if not exists public.preview_links (
+  id uuid primary key default gen_random_uuid(),
+  token_hash text unique not null,
+  page_slug text not null,
+  revision_id uuid references public.content_revisions(id),
+  expires_at timestamptz not null,
+  revoked_at timestamptz,
+  created_at timestamptz not null default now(),
+  created_by uuid references auth.users(id)
+);
+
+insert into storage.buckets (id, name, public)
+values
+  ('brand-assets', 'brand-assets', true),
+  ('site-media', 'site-media', true),
+  ('product-media', 'product-media', true),
+  ('preview-assets', 'preview-assets', false)
+on conflict (id) do nothing;
+
 alter table public.leads enable row level security;
 alter table public.custom_requests enable row level security;
 alter table public.orders enable row level security;
 alter table public.audit_logs enable row level security;
 alter table public.contact_requests enable row level security;
+alter table public.sample_requests enable row level security;
 alter table public.payments enable row level security;
 alter table public.exports enable row level security;
 alter table public.export_downloads enable row level security;
@@ -329,6 +377,7 @@ alter table public.content_sections enable row level security;
 alter table public.content_entries enable row level security;
 alter table public.products enable row level security;
 alter table public.product_features enable row level security;
+alter table public.product_price_history enable row level security;
 alter table public.segment_presets enable row level security;
 alter table public.faq_items enable row level security;
 alter table public.cta_definitions enable row level security;
@@ -336,6 +385,7 @@ alter table public.seo_entries enable row level security;
 alter table public.media_assets enable row level security;
 alter table public.content_revisions enable row level security;
 alter table public.content_publications enable row level security;
+alter table public.preview_links enable row level security;
 
 create or replace function public.current_admin_role()
 returns text
@@ -362,6 +412,7 @@ create policy "service role manages custom requests" on public.custom_requests f
 create policy "service role manages orders" on public.orders for all using (auth.role() = 'service_role');
 create policy "service role manages audit logs" on public.audit_logs for all using (auth.role() = 'service_role');
 create policy "service role manages contact requests" on public.contact_requests for all using (auth.role() = 'service_role');
+create policy "service role manages sample requests" on public.sample_requests for all using (auth.role() = 'service_role');
 create policy "service role manages payments" on public.payments for all using (auth.role() = 'service_role');
 create policy "service role manages exports" on public.exports for all using (auth.role() = 'service_role');
 create policy "service role manages export downloads" on public.export_downloads for all using (auth.role() = 'service_role');
@@ -377,6 +428,7 @@ create policy "admins manage content sections" on public.content_sections for al
 create policy "admins manage content entries" on public.content_entries for all using (public.is_admin_role(array['admin', 'editor']));
 create policy "admins manage products" on public.products for all using (public.is_admin_role(array['admin', 'editor']));
 create policy "admins manage product features" on public.product_features for all using (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage product price history" on public.product_price_history for all using (public.is_admin_role(array['admin', 'editor']));
 create policy "admins manage segment presets" on public.segment_presets for all using (public.is_admin_role(array['admin', 'editor']));
 create policy "admins manage faq items" on public.faq_items for all using (public.is_admin_role(array['admin', 'editor']));
 create policy "admins manage cta definitions" on public.cta_definitions for all using (public.is_admin_role(array['admin', 'editor']));
@@ -386,3 +438,9 @@ create policy "admins read content revisions" on public.content_revisions for se
 create policy "admins write content revisions" on public.content_revisions for insert with check (public.is_admin_role(array['admin', 'editor']));
 create policy "admins read content publications" on public.content_publications for select using (public.is_admin_role(array['admin', 'editor', 'leitura']));
 create policy "admins write content publications" on public.content_publications for insert with check (public.is_admin_role(array['admin', 'editor']));
+create policy "admins manage preview links" on public.preview_links for all using (public.is_admin_role(array['admin', 'editor']));
+
+create policy "public reads public brand assets" on storage.objects
+  for select using (bucket_id in ('brand-assets', 'site-media', 'product-media'));
+create policy "admins manage site storage assets" on storage.objects
+  for all using (bucket_id in ('brand-assets', 'site-media', 'product-media', 'preview-assets') and public.is_admin_role(array['admin', 'editor']));

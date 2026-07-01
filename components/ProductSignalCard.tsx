@@ -1,7 +1,7 @@
 import { CalendarDays, Map, MonitorSmartphone, ScrollText, SlidersHorizontal } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ProductVisual } from "@/components/ProductVisual";
 import type { Product } from "@/lib/site";
 import { isExternalHref, productHref, productPrimaryHref } from "@/lib/site";
 
@@ -11,6 +11,13 @@ const visualIcons = {
   contabilidades: ScrollText,
   "base-personalizada": SlidersHorizontal,
 };
+
+const visualVariants = {
+  "empresas-recem-abertas": "calendar",
+  "agencias-marketing": "marketing",
+  contabilidades: "accounting",
+  "base-personalizada": "custom",
+} as const;
 
 const copyBySlug: Record<string, { title: string; promise: string; audience: string; delivery: string; cta: string }> = {
   "empresas-recem-abertas": {
@@ -55,12 +62,14 @@ export function ProductSignalCard({ product }: { product: Product }) {
   };
 
   return (
-    <article className={`product-signal-card ${product.slug === "empresas-recem-abertas" ? "product-signal-card--featured" : ""}`}>
-      <div className="product-visual">
-        <Image src="/assets/brand/shield-icon-light.svg" alt="" width={118} height={138} aria-hidden="true" />
-        <Icon size={42} />
-        <span className="radar-pulse small" />
-      </div>
+    <article
+      className={[
+        "product-signal-card",
+        product.slug === "empresas-recem-abertas" ? "product-signal-card--featured" : "",
+        product.slug === "base-personalizada" ? "product-signal-card--wide" : "",
+      ].filter(Boolean).join(" ")}
+    >
+      <ProductVisual icon={Icon} variant={visualVariants[product.slug as keyof typeof visualVariants] || "custom"} />
       <span className="badge">{product.badge}</span>
       <h3 className="h3">{copy.title}</h3>
       <p>{copy.promise}</p>

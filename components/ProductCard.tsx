@@ -1,4 +1,4 @@
-import { ArrowRight, MessageCircle, ShoppingCart } from "lucide-react";
+import { ArrowRight, DatabaseZap, Gift, MessageCircle, ShoppingCart } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ProductVisual } from "@/components/ProductVisual";
 import type { Product } from "@/lib/site";
@@ -9,10 +9,11 @@ export function ProductCard({ product }: { product: Product }) {
   const buyHref = productPrimaryHref(product);
   const buyExternal = isExternalHref(buyHref);
   const actionLabel = payment ? "Escolher esta base" : site.whatsapp ? "Falar sobre meu público" : "Ver o que vem na base";
+  const VisualIcon = product.slug === "amostra-gratuita" ? Gift : DatabaseZap;
 
   return (
     <article className="card product-card">
-      <ProductVisual slug={product.slug} />
+      <ProductVisual icon={VisualIcon} variant="custom" />
       <div>
         {product.badge ? <span className="badge">{product.badge}</span> : null}
         <h3 className="h3" style={{ marginTop: 14 }}>{product.name}</h3>

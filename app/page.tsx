@@ -74,7 +74,7 @@ export default function HomePage() {
             <h2 className="h2">Veja como sua base chega para a equipe comercial.</h2>
             <p className="lead">
               A entrega prioriza campos úteis para abordagem: empresa, segmento, cidade, CNAE, porte, abertura, site,
-              contato empresarial e status comercial ilustrativo.
+              e status comercial ilustrativo.
             </p>
             <div className="impact-stack">
               {impactCards.map((item) => (

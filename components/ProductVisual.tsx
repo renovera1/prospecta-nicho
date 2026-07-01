@@ -1,21 +1,14 @@
-import { BarChart3, Building2, DatabaseZap, Gift, Megaphone, type LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 type ProductVisualProps = {
-  slug: string;
+  icon: LucideIcon;
+  variant: "calendar" | "marketing" | "accounting" | "custom";
+  watermark?: boolean;
 };
 
-const productIcons: Record<string, LucideIcon> = {
-  "empresas-recem-abertas": Building2,
-  "agencias-marketing": Megaphone,
-  contabilidades: BarChart3,
-  "base-personalizada": DatabaseZap,
-  "amostra-gratuita": Gift,
-};
-
-export function ProductVisual({ slug }: ProductVisualProps) {
-  const Icon = productIcons[slug] || DatabaseZap;
+export function ProductVisual({ icon: Icon, variant, watermark = true }: ProductVisualProps) {
   return (
-    <span className="product-visual" aria-hidden="true">
+    <span className="product-visual" data-variant={variant} data-watermark={watermark} aria-hidden="true">
       <Icon size={22} strokeWidth={2.2} />
     </span>
   );

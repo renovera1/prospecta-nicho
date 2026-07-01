@@ -4,7 +4,7 @@ import { HomeSampleForm } from "@/components/HomeSampleForm";
 export function SampleConversionSection() {
   return (
     <section className="section sample-section" id="amostra">
-      <Image className="sample-shield" src="/assets/brand/shield-icon.svg" alt="" width={360} height={420} aria-hidden="true" />
+      <Image className="sample-shield" src="/assets/brand/logo-symbol.png" alt="" width={295} height={305} aria-hidden="true" />
       <div className="container-wide sample-grid">
         <div className="sample-copy">
           <p className="eyebrow">Amostra gratuita</p>

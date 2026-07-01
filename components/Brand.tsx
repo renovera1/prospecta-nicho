@@ -5,5 +5,5 @@ type Props = {
 };
 
 export function Brand({ variant = "dark" }: Props) {
-  return <BrandLogo variant={variant} size={variant === "light" ? "footer" : "header"} />;
+  return <BrandLogo variant={variant === "light" ? "footer" : "header"} />;
 }

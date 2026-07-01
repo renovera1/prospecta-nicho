@@ -2,7 +2,18 @@
 
 ## Identidade
 
-A ProspectaNicho usa a marca oficial em `public/assets/brand/`. A logo nunca deve ser substituída por ícone, sigla ou texto manual.
+A ProspectaNicho usa a marca oficial em `public/assets/brand/`, gerada a partir da imagem enviada pelo usuário em 2026-07-01. A logo nunca deve ser substituída por ícone, sigla, SVG improvisado ou texto manual.
+
+Assets oficiais:
+
+- `logo-master-reference.png`
+- `logo-horizontal.png`
+- `logo-horizontal-dark-bg.png`
+- `logo-symbol.png`
+- `favicon.png`
+- `apple-touch-icon.png`
+- `og-image.png`
+- `brand-cover.png`
 
 ## Paleta
 
@@ -33,6 +44,14 @@ A ProspectaNicho usa a marca oficial em `public/assets/brand/`. A logo nunca dev
 - Chips de escolha usam `.choice-chip`.
 - Cards repetidos mantêm raio visual moderado e hierarquia clara.
 - Previews de dados devem usar exemplos fictícios e mascarados.
+- Cards de produto podem ter um ícone principal, uma borda simples e sombra apenas no hover.
+- A marca deve ser renderizada por `components/BrandLogo.tsx`.
+
+## Arquivos CSS
+
+- `styles/tokens.css`: tokens de cor, espaço, raio e largura.
+- `styles/layout.css`: containers e gutters responsivos.
+- `styles/components.css`: utilitários de composição e superfícies.
 
 ## Acessibilidade
 

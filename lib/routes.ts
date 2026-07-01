@@ -46,7 +46,6 @@ export const publicRoutes = [
   routes.checkoutSuccess,
   routes.checkoutPending,
   routes.checkoutError,
-  routes.admin,
 ];
 
 export const legacyRedirects = ["/blog", "/conteudos", "/solucoes", "/insights"];
