@@ -6,7 +6,7 @@ export const objectiveOptions = [
   "Energia solar",
   "ERP e sistemas",
   "Maquininhas",
-  "Comunica??o visual",
+  "Comunicação visual",
   "Consultoria B2B",
   "Certificado digital",
   "Seguros empresariais",
@@ -60,7 +60,7 @@ export const extraFieldOptions = [
 ] as const;
 
 export const builderSchema = z.object({
-  audience: z.string().min(2, "Escolha para quem voc? quer vender."),
+  audience: z.string().min(2, "Escolha para quem você quer vender."),
   customAudience: z.string().optional(),
   goal: z.string().min(2, "Escolha um objetivo comercial."),
   customGoal: z.string().optional(),

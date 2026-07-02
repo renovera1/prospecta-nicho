@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+export function generateStaticParams() {
+  return [{ id: "demo" }];
+}
+
 export default async function PedidoPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const whatsapp = createWhatsAppLink(`Olá, quero falar sobre o pedido ${id} da ProspectaNicho.`);

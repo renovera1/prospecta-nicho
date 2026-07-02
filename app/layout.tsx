@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Sora } from "next/font/google";
 import { AppShell } from "@/components/AppShell";
+import { assetPath } from "@/lib/asset-path";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -15,15 +16,15 @@ export const metadata: Metadata = {
   },
   description: site.description,
   icons: {
-    icon: "/assets/brand/favicon.png",
-    apple: "/assets/brand/apple-touch-icon.png",
+    icon: assetPath("/assets/brand/favicon.png"),
+    apple: assetPath("/assets/brand/apple-touch-icon.png"),
   },
   openGraph: {
     title: "ProspectaNicho",
     description: site.description,
     type: "website",
     url: site.url,
-    images: ["/assets/brand/og-image.png"],
+    images: [`${site.url}/assets/brand/og-image.png`],
   },
   robots: process.env.NEXT_PUBLIC_DEPLOY_ENV === "preview" ? { index: false, follow: false } : undefined,
   twitter: {

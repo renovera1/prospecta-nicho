@@ -3,17 +3,9 @@
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { getSegmentById, segmentCards } from "@/lib/segments";
 
-const audiences = [
-  "Agências",
-  "Contabilidades",
-  "Energia solar",
-  "ERP e sistemas",
-  "Maquininhas",
-  "Comunicação visual",
-  "Consultorias",
-  "Outro",
-];
+const audiences = segmentCards.slice(0, 8);
 
 const periods = [
   "últimos 30 dias",
@@ -25,31 +17,28 @@ const periods = [
 
 export function HomeBaseBuilderTeaser() {
   const router = useRouter();
-  const [segment, setSegment] = useState("Agências");
+  const [segment, setSegment] = useState("agencias");
   const [city, setCity] = useState("");
   const [period, setPeriod] = useState("últimos 90 dias");
+  const selectedSegment = getSegmentById(segment);
 
   function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const params = new URLSearchParams();
-    if (segment) {
-      params.set("audience", segment);
-      params.set("segment", segment);
-    }
+    const params = new URLSearchParams({ segment, source: "home-quick-request" });
     if (city.trim()) params.set("city", city.trim());
-    if (period) params.set("openedPeriod", period);
-    router.push(`/montar-minha-base?${params.toString()}`);
+    if (period) params.set("period", period);
+    router.push(`/solicitar-planilha?${params.toString()}`);
   }
 
   return (
     <section className="section section--light builder-teaser-section">
       <div className="container-wide split-section">
         <div>
-          <p className="eyebrow">MONTE SEU RECORTE</p>
-          <h2 className="h2">Seu público não cabe em uma lista genérica.</h2>
+          <p className="eyebrow">Solicitação rápida</p>
+          <h2 className="h2">Peça uma planilha sem passar pelo fluxo longo.</h2>
           <p className="lead">
-            Escolha segmento, região, momento da empresa e formato de entrega. Em poucos passos, você cria uma
-            solicitação comercial muito mais clara.
+            Escolha segmento, região e momento da empresa. Se precisar de filtros avançados, refinamos depois no
+            montador completo.
           </p>
           <form className="builder-mini-form" onSubmit={submit}>
             <div className="teaser-choice-group">
@@ -58,12 +47,12 @@ export function HomeBaseBuilderTeaser() {
                 {audiences.map((option) => (
                   <button
                     className="choice-chip"
-                    data-active={segment === option}
+                    data-active={segment === option.id}
                     type="button"
-                    key={option}
-                    onClick={() => setSegment(option)}
+                    key={option.id}
+                    onClick={() => setSegment(option.id)}
                   >
-                    {option}
+                    {option.label}
                   </button>
                 ))}
               </div>
@@ -93,14 +82,14 @@ export function HomeBaseBuilderTeaser() {
               </div>
             </div>
             <button className="button button--primary" type="submit">
-              Continuar montando minha base
+              Solicitar esta planilha
               <ArrowRight size={18} />
             </button>
           </form>
         </div>
         <div className="teaser-radar-panel">
-          <span className="badge">Seu recorte em construção</span>
-          <h3 className="h3">{segment} {city ? `em ${city}` : "com região a definir"}</h3>
+          <span className="badge">Pedido rápido</span>
+          <h3 className="h3">{selectedSegment.label} {city ? `em ${city}` : "com região a definir"}</h3>
           <div className="teaser-map" aria-hidden="true">
             <span className="radar-pulse" />
             <span className="radar-dot dot-a" />
@@ -108,7 +97,7 @@ export function HomeBaseBuilderTeaser() {
             <span className="radar-line line-a" />
           </div>
           <div className="signal-chips">
-            <span>{segment}</span>
+            <span>{selectedSegment.label}</span>
             <span>{city || "Cidade ou região"}</span>
             <span>ME e EPP</span>
             <span>{period}</span>

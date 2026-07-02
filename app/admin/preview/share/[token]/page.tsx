@@ -3,6 +3,10 @@ import { AdminShell } from "@/components/admin/AdminShell";
 
 export const metadata: Metadata = { title: "Preview compartilhado", robots: { index: false, follow: false } };
 
+export function generateStaticParams() {
+  return [{ token: "demo" }];
+}
+
 export default async function SharedPreviewPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
   return (

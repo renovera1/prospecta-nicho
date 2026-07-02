@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { assetPath } from "@/lib/asset-path";
 
 type BrandLogoProps = {
   variant?: "header" | "footer" | "symbol" | "compact";
@@ -22,7 +23,7 @@ const imageSizeByVariant = {
 };
 
 export function BrandLogo({ variant = "header", priority = variant === "header", linked = true }: BrandLogoProps) {
-  const src = logoByVariant[variant];
+  const src = assetPath(logoByVariant[variant]);
   const size = imageSizeByVariant[variant];
   const image = (
     <Image

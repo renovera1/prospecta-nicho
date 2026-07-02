@@ -5,9 +5,10 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { HomeBaseBuilderTeaser } from "@/components/HomeBaseBuilderTeaser";
 import { LeadDeliveryPreview } from "@/components/LeadDeliveryPreview";
-import { OpportunityRadar } from "@/components/OpportunityRadar";
+import { OpportunityShowcase } from "@/components/OpportunityShowcase";
 import { ProductSignalCard } from "@/components/ProductSignalCard";
 import { SampleConversionSection } from "@/components/SampleConversionSection";
+import { buildQuickRequestHref, segmentCards } from "@/lib/segments";
 import { createWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
 import { homeFaq, isExternalHref, products } from "@/lib/site";
 
@@ -16,19 +17,6 @@ const impactCards = [
   "Estrutura pronta para rotina comercial",
   "Campos confirmados conforme disponibilidade",
   "Suporte humano para validar o recorte",
-];
-
-const segments = [
-  ["Agências", "Encontre empresas que estão estruturando presença digital."],
-  ["Contabilidades", "Aproxime-se de empresas recém-abertas antes da concorrência."],
-  ["Energia solar", "Priorize regiões e perfis com maior potencial comercial."],
-  ["ERP e sistemas", "Ache empresas com rotina operacional e necessidade de organização."],
-  ["Maquininhas", "Prospecte negócios que vendem presencialmente ou estão começando."],
-  ["Comunicação visual", "Chegue quando a empresa precisa de fachada, marca e materiais."],
-  ["Consultorias", "Filtre empresas por momento, porte e atividade econômica."],
-  ["Certificado digital", "Encontre empresas com demanda operacional inicial."],
-  ["Seguros empresariais", "Mapeie negócios que precisam proteger sua operação."],
-  ["Segurança do trabalho", "Foque em segmentos com exigências e riscos operacionais."],
 ];
 
 export default function HomePage() {
@@ -60,7 +48,7 @@ export default function HomePage() {
               Sem assinatura obrigatória. Sem lista genérica. Recortes construídos para sua operação.
             </p>
           </div>
-          <OpportunityRadar />
+          <OpportunityShowcase />
         </div>
       </section>
 
@@ -114,10 +102,15 @@ export default function HomePage() {
             <h2 className="h2">Uma base melhor começa com um público melhor definido.</h2>
           </div>
           <div className="segment-labels">
-            {segments.map(([label, text]) => (
-              <Link href={`/montar-minha-base?segment=${encodeURIComponent(label)}`} key={label} aria-label={`${label}: ${text}`}>
-                <strong>{label}</strong>
-                <span>{text}</span>
+            {segmentCards.map((segment) => (
+              <Link
+                href={buildQuickRequestHref(segment.id)}
+                key={segment.id}
+                aria-label={`${segment.label}: ${segment.description}`}
+              >
+                <strong>{segment.title}</strong>
+                <span>{segment.description}</span>
+                <em>Solicitar base para este segmento</em>
               </Link>
             ))}
           </div>

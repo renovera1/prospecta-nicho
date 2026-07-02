@@ -2,7 +2,7 @@
 
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Brand } from "@/components/Brand";
 import { ButtonLink } from "@/components/ButtonLink";
 import { createWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
@@ -16,14 +16,42 @@ const navItems = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
   const whatsappHref = createWhatsAppLink(defaultWhatsAppMessage);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    if (open) {
+      const firstFocusable = panelRef.current?.querySelector<HTMLElement>("a, button");
+      firstFocusable?.focus();
+    }
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  function handlePanelKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Escape") {
+      setOpen(false);
+      return;
+    }
+
+    if (event.key !== "Tab" || !panelRef.current) return;
+    const focusable = Array.from(panelRef.current.querySelectorAll<HTMLElement>("a, button")).filter(
+      (element) => !element.hasAttribute("disabled"),
+    );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!first || !last) return;
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
 
   return (
     <header className="header">
@@ -50,7 +78,15 @@ export function Header() {
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </nav>
-        <div className="mobile-panel" data-open={open}>
+        <div
+          className="mobile-panel"
+          data-open={open}
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu mobile"
+          onKeyDown={handlePanelKeyDown}
+        >
           {navItems.map(([label, href]) => (
             <Link key={href} href={href} onClick={() => setOpen(false)}>
               {label}

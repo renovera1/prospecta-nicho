@@ -1,19 +1,20 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import { getConfiguredPaymentProvider } from "@/lib/payments/provider";
+import { parseJsonBody, rateLimit, requireTrustedOrigin } from "@/lib/server/security";
 import { getProduct } from "@/lib/site";
-
-const schema = z.object({
-  productSlug: z.string().min(2),
-  customerName: z.string().min(2).optional(),
-  customerEmail: z.string().email().optional(),
-  orderId: z.string().optional(),
-  idempotencyKey: z.string().optional(),
-});
+import { createPreferenceSchema } from "@/src/schemas/payment";
 
 export async function POST(request: Request) {
-  const body = await request.json();
-  const parsed = schema.safeParse(body);
+  const limited = rateLimit(request, "payment-preference", 4, 60_000);
+  if (limited) return limited;
+
+  const forbiddenOrigin = requireTrustedOrigin(request);
+  if (forbiddenOrigin) return forbiddenOrigin;
+
+  const body = await parseJsonBody(request, 8_192);
+  if (!body.ok) return body.response;
+
+  const parsed = createPreferenceSchema.safeParse(body.body);
 
   if (!parsed.success) {
     return NextResponse.json({ ok: false, message: "Dados inválidos." }, { status: 400 });

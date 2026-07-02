@@ -1,3 +1,4 @@
+import { assetPath } from "@/lib/asset-path";
 import { products, homeFaq, dataFields } from "@/lib/site";
 
 export const adminRoles = [
@@ -79,7 +80,7 @@ export const adminProducts = products.map((product, index) => ({
   price: product.price,
   badge: product.badge || "Catálogo",
   description: product.description,
-  image: "/assets/brand/logo-symbol.png",
+  image: assetPath("/assets/brand/logo-symbol.png"),
   cta: product.homeCta || "Escolher esta base",
   checkout: product.paymentEnv || "WhatsApp/fallback",
   order: index + 1,
@@ -94,7 +95,7 @@ export const adminFaq = homeFaq.map((item, index) => ({
   visible: true,
 }));
 
-export const mediaAssets = [
+const rawMediaAssets = [
   { name: "Logo matriz", path: "/assets/brand/logo-master-reference.png", type: "brand" },
   { name: "Logo principal", path: "/assets/brand/logo-horizontal.png", type: "brand" },
   { name: "Logo fundo escuro", path: "/assets/brand/logo-horizontal-dark-bg.png", type: "brand" },
@@ -103,6 +104,8 @@ export const mediaAssets = [
   { name: "Open Graph", path: "/assets/brand/og-image.png", type: "social" },
   { name: "Brand cover", path: "/assets/brand/brand-cover.png", type: "social" },
 ];
+
+export const mediaAssets = rawMediaAssets.map((asset) => ({ ...asset, path: assetPath(asset.path) }));
 
 export const contentHealth = [
   { label: "Campos de base", value: dataFields.length.toString() },

@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Brand } from "@/components/Brand";
+import { buildQuickRequestHref, segmentCards } from "@/lib/segments";
 import { products, site } from "@/lib/site";
 
 export function Footer() {
-  const audienceLinks = ["Agências", "Contabilidades", "Energia solar"];
+  const audienceLinks = segmentCards.slice(0, 3);
 
   return (
     <footer className="footer">
@@ -26,8 +27,8 @@ export function Footer() {
         <div>
           <h3>Para quem é</h3>
           <p><Link href="/para-quem-e">Visão geral</Link></p>
-          {audienceLinks.map((label) => (
-            <p key={label}><Link href={`/montar-minha-base?segment=${encodeURIComponent(label)}`}>{label}</Link></p>
+          {audienceLinks.map((segment) => (
+            <p key={segment.id}><Link href={buildQuickRequestHref(segment.id, "footer-segment")}>{segment.label}</Link></p>
           ))}
         </div>
         <div>

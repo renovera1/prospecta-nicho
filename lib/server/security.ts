@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getSiteUrl } from "@/lib/site-url";
 
 const buckets = new Map<string, { count: number; resetAt: number }>();
 
@@ -35,6 +36,44 @@ export function rateLimit(request: Request, key: string, limit = 8, windowMs = 6
   }
 
   return null;
+}
+
+export async function parseJsonBody(request: Request, maxBytes = 16_384) {
+  const text = await request.text();
+  if (new TextEncoder().encode(text).length > maxBytes) {
+    return {
+      ok: false as const,
+      response: NextResponse.json({ ok: false, message: "Payload muito grande." }, { status: 413 }),
+    };
+  }
+
+  try {
+    return { ok: true as const, body: JSON.parse(text || "{}") as Record<string, unknown> };
+  } catch {
+    return {
+      ok: false as const,
+      response: NextResponse.json({ ok: false, message: "JSON inválido." }, { status: 400 }),
+    };
+  }
+}
+
+export function requireTrustedOrigin(request: Request) {
+  const origin = request.headers.get("origin");
+  if (!origin) return null;
+
+  try {
+    const originUrl = new URL(origin);
+    const host = request.headers.get("host");
+    const siteUrl = new URL(getSiteUrl());
+    const sameHost = host && originUrl.host === host;
+    const sameSite = originUrl.host === siteUrl.host;
+
+    if (sameHost || sameSite) return null;
+  } catch {
+    return NextResponse.json({ ok: false, message: "Origem inválida." }, { status: 403 });
+  }
+
+  return NextResponse.json({ ok: false, message: "Origem não autorizada." }, { status: 403 });
 }
 
 export function hasHoneypot(body: Record<string, unknown>) {

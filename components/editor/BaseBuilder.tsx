@@ -20,6 +20,7 @@ import {
 } from "@/lib/editor-schema";
 import { defaultBuilderData, segmentPresets } from "@/lib/editor-presets";
 import { applyPreset, restorePublicFilters } from "@/lib/editor-utils";
+import { isStaticExport } from "@/lib/static-export";
 import { createWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
 import { trackEvent } from "@/lib/tracking";
 import type { BaseBuilderData, BuilderStep, SegmentPreset } from "@/types/editor";
@@ -93,6 +94,13 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
   async function submit(values: BaseBuilderData) {
     if (values.companySite) return;
     setSubmitError("");
+    if (isStaticExport) {
+      window.localStorage.removeItem(storageKey);
+      trackEvent("editor_submitted", { segment: values.segment, city: values.city });
+      setSubmitted(values);
+      return;
+    }
+
     const response = await fetch("/api/custom-base-request", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -129,7 +137,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
           <form className="builder-form" onSubmit={form.handleSubmit(submit)}>
             {currentStep === "objective" ? (
               <div className="builder-panel">
-                <h2 className="h3">Para quem voc? quer vender?</h2>
+                <h2 className="h3">Para quem você quer vender?</h2>
                 <div className="option-grid">
                   {objectiveOptions.map((option) => (
                     <label key={option}>
@@ -351,7 +359,7 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
               {currentStep === "delivery" ? (
                 <button className="button button--primary" type="submit" disabled={form.formState.isSubmitting}>
                   <CheckCircle2 size={18} />
-                  Enviar meu recorte para valida??o
+                  Enviar meu recorte para validação
                 </button>
               ) : (
                 <button className="button button--primary" type="button" onClick={nextStep}>

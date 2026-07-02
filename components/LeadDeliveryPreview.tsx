@@ -12,7 +12,6 @@ export function LeadDeliveryPreview() {
     <div className="delivery-preview" aria-label="Prévia profissional de entrega de base B2B">
       <div className="delivery-body">
         <div className="delivery-toolbar">
-          <strong>ProspectaNicho / Entrega</strong>
           <span>Ativas</span>
           <span>ME e EPP</span>
           <span>Últimos 90 dias</span>

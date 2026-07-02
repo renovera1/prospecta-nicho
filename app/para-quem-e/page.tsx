@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ButtonLink";
+import { buildQuickRequestHref } from "@/lib/segments";
 import { solutions } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -8,6 +9,15 @@ export const metadata: Metadata = {
 };
 
 export default function ParaQuemEPage() {
+  const segmentBySolution: Record<string, string> = {
+    "agencias-de-marketing": "agencias",
+    contabilidades: "contabilidades",
+    "energia-solar": "energia-solar",
+    "erp-e-sistemas": "erp-e-sistemas",
+    "maquininhas-e-meios-de-pagamento": "maquininhas",
+    "consultorias-b2b": "consultorias",
+  };
+
   return (
     <>
       <section className="hero">
@@ -33,8 +43,8 @@ export default function ParaQuemEPage() {
                 <Icon size={28} aria-hidden="true" />
                 <h2 className="h3">{solution.title}</h2>
                 <p className="muted">{solution.pain}</p>
-                <ButtonLink href={`/montar-minha-base?segment=${encodeURIComponent(solution.title)}`} variant="secondary">
-                  Montar recorte para este segmento
+                <ButtonLink href={buildQuickRequestHref(segmentBySolution[solution.slug] || "agencias", "solution-card")} variant="secondary">
+                  Solicitar base para este segmento
                 </ButtonLink>
               </article>
             );
