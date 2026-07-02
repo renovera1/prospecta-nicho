@@ -9,6 +9,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*.log
 .vercel
 coverage
 .agents
@@ -16,5 +17,15 @@ coverage
 work
 outputs
 artifacts/
+artifacts/visual-qc/
 __pycache__/
 *.py[cod]
+tsconfig.tsbuildinfo
+*.csv
+*.xlsx
+*.xls
+*.sqlite
+*.db
+uploads/
+exports/
+rfb-data/

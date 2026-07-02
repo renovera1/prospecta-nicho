@@ -7,12 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "spellcheck": "node scripts/spellcheck.mjs && cspell \"app/**/*.{ts,tsx,md}\" \"components/**/*.{ts,tsx}\" \"lib/**/*.{ts,tsx}\"",
     "check:links": "node --experimental-strip-types scripts/check-links.mjs",
     "check:metadata": "node scripts/check-metadata.mjs",
     "check:content": "node scripts/check-content.mjs",
     "test:editor": "node --experimental-strip-types --test tests/*.test.mjs",
-    "test:e2e": "node scripts/routes-audit.mjs",
+    "test:e2e": "playwright test",
     "test": "npm run test:editor"
   },
   "dependencies": {
