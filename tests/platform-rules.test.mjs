@@ -36,12 +36,59 @@ test("blog público redireciona para home", () => {
 });
 
 test("formulários comerciais têm honeypot, rate limit e Turnstile preparado", () => {
-  for (const route of ["app/api/contact/route.ts", "app/api/free-sample-request/route.ts", "app/api/custom-base-request/route.ts"]) {
+  for (const route of [
+    "app/api/contact/route.ts",
+    "app/api/free-sample-request/route.ts",
+    "app/api/custom-base-request/route.ts",
+    "app/api/custom-requests/route.ts",
+  ]) {
     const source = readFileSync(route, "utf8");
     assert.match(source, /rateLimit/);
     assert.match(source, /hasHoneypot/);
     assert.match(source, /verifyTurnstileIfConfigured/);
   }
+});
+
+test("configuração Next mantém GitHub Pages apenas de forma condicional", () => {
+  const source = readFileSync("next.config.ts", "utf8");
+  assert.match(source, /GITHUB_PAGES/);
+  assert.match(source, /output: "export"/);
+  assert.match(source, /assetPrefix/);
+  assert.match(source, /basePath/);
+  assert.match(source, /\?\s*{/);
+});
+
+test("segmentos públicos levam para solicitação rápida", () => {
+  const source = readFileSync("app/page.tsx", "utf8");
+  const segments = readFileSync("lib/segments.ts", "utf8");
+  assert.match(source, /buildQuickRequestHref/);
+  assert.match(segments, /agencias/);
+  assert.match(segments, /seguranca-do-trabalho/);
+});
+
+test("admin normaliza mídia com assetPath e mantém Símbolo íntegro", () => {
+  const source = readFileSync("lib/content-studio.ts", "utf8");
+  assert.match(source, /rawMediaAssets/);
+  assert.match(source, /Símbolo/);
+  assert.match(source, /assetPath\(asset\.path\)/);
+});
+
+test("next config define headers de segurança no runtime server", () => {
+  const source = readFileSync("next.config.ts", "utf8");
+  assert.match(source, /Content-Security-Policy/);
+  assert.match(source, /X-Content-Type-Options/);
+  assert.match(source, /Referrer-Policy/);
+  assert.match(source, /Permissions-Policy/);
+  assert.match(source, /poweredByHeader:\s*false/);
+});
+
+test("solicitação rápida usa schema centralizado, service e logger redigido", () => {
+  const route = readFileSync("app/api/custom-requests/route.ts", "utf8");
+  assert.match(route, /customRequestSchema/);
+  assert.match(route, /submitCustomRequest/);
+  assert.match(route, /logger/);
+  assert.match(route, /parseJsonBody/);
+  assert.match(route, /requireTrustedOrigin/);
 });
 
 test("pagamentos não aprovam fluxo sem webhook validado", () => {
