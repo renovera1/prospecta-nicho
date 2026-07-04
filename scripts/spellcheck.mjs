@@ -41,6 +41,7 @@ for (const root of roots) {
       .split(/\r?\n/)
       .filter((line) =>
         !line.includes("checkoutLinkEnvKey") &&
+        !line.includes("id:") &&
         !line.includes("NEXT_PUBLIC_") &&
         !line.includes("slug:") &&
         !line.includes("empresas-recem-abertas")
