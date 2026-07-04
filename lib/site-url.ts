@@ -1,5 +1,5 @@
 const productionUrl = "https://prospectanicho.com.br";
-const blockedPublicHosts = /localhost|127\.0\.0\.1|:3000|:3001|github\.io|renovera-projetos-eletricos|renovera1/i;
+const blockedPublicHosts = /localhost|127\.0\.0\.1|:3000|:3001|github\.io|renovera1/i;
 const allowGitHubPages = process.env.NEXT_PUBLIC_ALLOW_GITHUB_PAGES === "true" || process.env.GITHUB_PAGES === "true";
 
 function cleanBaseUrl(value: string) {

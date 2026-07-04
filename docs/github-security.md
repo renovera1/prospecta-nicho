@@ -2,14 +2,14 @@
 
 ## Repositório fonte
 
-- Repositório: `renovera1/prospectanicho-site`
-- Remote local: `https://github.com/renovera1/prospectanicho-site.git`
-- Visibilidade confirmada: `PRIVATE`
-- Confirmação feita via `gh repo view renovera1/prospectanicho-site --json nameWithOwner,visibility,isPrivate,url` em 2026-07-02.
+- Repositório: `renovera1/prospecta-nicho`
+- Remote local: `https://github.com/renovera1/prospecta-nicho.git`
+- Publicação GitHub Pages: `https://renovera1.github.io/prospecta-nicho/`
+- O repositório não deve conter credenciais reais, exports de leads, dumps, planilhas comerciais ou tokens.
 
 ## Observação sobre GitHub Pages
 
-O repositório de publicação estática `renovera1/renovera-projetos-eletricos` é separado e precisa continuar público para servir o link GitHub Pages solicitado.
+Kairós Engenharia deve permanecer isolada em `renovera1/kairos-engenharia`, com Pages próprio em `https://renovera1.github.io/kairos-engenharia/`. Nenhum asset, workflow ou branch de deploy da Kairós deve ser usado pela ProspectaNicho.
 
 ## Secret scanning
 

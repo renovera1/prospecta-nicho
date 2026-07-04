@@ -2,6 +2,11 @@
 
 Plataforma comercial da ProspectaNicho para venda de bases B2B segmentadas, pedidos de amostra, montagem de base personalizada e preparação do motor de dados empresariais.
 
+Repositório e publicação GitHub Pages esperados:
+
+- Repositório: `renovera1/prospecta-nicho`
+- Site público: `https://renovera1.github.io/prospecta-nicho/`
+
 ## Stack
 
 - Next.js App Router

@@ -7,7 +7,6 @@
 - `components/editor/`: fluxo "Monte sua base".
 - `lib/`: configuração de site, catálogo de produtos, WhatsApp, analytics, pagamentos, segurança server-side e integrações.
 - `public/assets/brand/`: identidade visual oficial.
-- `public/assets/renovera-legado/`: páginas legadas Renovera isoladas em iframe para rotas específicas antigas.
 - `supabase/`: schema transacional com RLS.
 - `infra/clickhouse/`: schema analítico.
 - `workers/rfb_cnpj/`: scaffolding do worker Python da Receita Federal.
@@ -23,6 +22,7 @@
 - Legal: `/politica-de-privacidade`, `/politica-de-supressao`, `/termos-de-uso`, `/termos-de-entrega`, `/aviso-de-dados-empresariais`, `/politica-de-cookies`.
 - Admin: `/admin`.
 - Desativada: `/blog` redireciona permanentemente para `/`.
+- Material legado de outro projeto não pertence mais ao repositório ProspectaNicho.
 
 ## Componentes existentes
 

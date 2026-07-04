@@ -9,7 +9,7 @@ export default defineConfig({
   testDir: "./e2e",
   outputDir: "artifacts/visual-qc",
   timeout: 30_000,
-  fullyParallel: true,
+  fullyParallel: false,
   retries: 0,
   use: {
     baseURL,

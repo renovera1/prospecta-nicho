@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-- Repositório fonte `renovera1/prospectanicho-site` confirmado como privado em 2026-07-02.
+- Repositório fonte/deploy `renovera1/prospecta-nicho` separado de Kairós Engenharia.
 - Nenhum valor real de segredo foi encontrado na varredura local; existem apenas nomes de variáveis em `.env.example`, docs e código.
 - Formulários públicos usam Zod, honeypot, rate limit e Turnstile preparado.
 - `/api/custom-requests` valida tamanho de payload, origem, Turnstile, idempotência e usa logger redigido.
