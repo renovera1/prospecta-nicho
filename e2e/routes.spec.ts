@@ -22,6 +22,6 @@ test.describe("rotas públicas", () => {
 });
 
 test("rotas legadas redirecionam para a home", async ({ page }) => {
-  await page.goto("/blog-6-duvidas.html");
+  await page.goto("/blog");
   await expect(page).toHaveURL(/\/$/);
 });

@@ -48,7 +48,7 @@ const okRoutes = [
   "/admin/preview/share/token-de-homologacao",
 ];
 
-const redirects = ["/blog", "/conteudos", "/solucoes", "/solucoes/agencias-de-marketing", "/blog-6-duvidas.html"];
+const redirects = ["/blog", "/conteudos", "/solucoes", "/solucoes/agencias-de-marketing", "/insights"];
 
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
