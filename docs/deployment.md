@@ -6,7 +6,7 @@ Produção completa deve rodar em Vercel ou ambiente compatível com Next.js ser
 
 ## GitHub Pages
 
-O link `https://renovera1.github.io/prospecta-nicho/` é a publicação estática exclusiva da ProspectaNicho. Formulários que dependem de API precisam de fallback estático ou endpoint externo.
+O link `https://luscaarmstrong1.github.io/prospecta-nicho/` é a publicação estática exclusiva da ProspectaNicho. Formulários que dependem de API precisam de fallback estático ou endpoint externo.
 
 ## Variáveis mínimas em produção
 

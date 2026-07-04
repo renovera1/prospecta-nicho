@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-- Repositório fonte/deploy `renovera1/prospecta-nicho` separado de Kairós Engenharia.
+- Repositório fonte/deploy `luscaarmstrong1/prospecta-nicho` separado de Kairós Engenharia.
 - Nenhum valor real de segredo foi encontrado na varredura local; existem apenas nomes de variáveis em `.env.example`, docs e código.
 - Formulários públicos usam Zod, honeypot, rate limit e Turnstile preparado.
 - `/api/custom-requests` valida tamanho de payload, origem, Turnstile, idempotência e usa logger redigido.

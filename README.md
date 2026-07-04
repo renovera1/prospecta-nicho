@@ -4,8 +4,8 @@ Plataforma comercial da ProspectaNicho para venda de bases B2B segmentadas, pedi
 
 Repositório e publicação GitHub Pages esperados:
 
-- Repositório: `renovera1/prospecta-nicho`
-- Site público: `https://renovera1.github.io/prospecta-nicho/`
+- Repositório: `luscaarmstrong1/prospecta-nicho`
+- Site público: `https://luscaarmstrong1.github.io/prospecta-nicho/`
 
 ## Stack
 

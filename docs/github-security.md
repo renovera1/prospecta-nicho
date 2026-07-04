@@ -2,14 +2,14 @@
 
 ## Repositório fonte
 
-- Repositório: `renovera1/prospecta-nicho`
-- Remote local: `https://github.com/renovera1/prospecta-nicho.git`
-- Publicação GitHub Pages: `https://renovera1.github.io/prospecta-nicho/`
+- Repositório: `luscaarmstrong1/prospecta-nicho`
+- Remote local: `https://github.com/luscaarmstrong1/prospecta-nicho.git`
+- Publicação GitHub Pages: `https://luscaarmstrong1.github.io/prospecta-nicho/`
 - O repositório não deve conter credenciais reais, exports de leads, dumps, planilhas comerciais ou tokens.
 
 ## Observação sobre GitHub Pages
 
-Kairós Engenharia deve permanecer isolada em `renovera1/kairos-engenharia`, com Pages próprio em `https://renovera1.github.io/kairos-engenharia/`. Nenhum asset, workflow ou branch de deploy da Kairós deve ser usado pela ProspectaNicho.
+Kairós Engenharia deve permanecer isolada em `luscaarmstrong1/kairos-engenharia`, com Pages próprio em `https://luscaarmstrong1.github.io/kairos-engenharia/`. Nenhum asset, workflow ou branch de deploy da Kairós deve ser usado pela ProspectaNicho.
 
 ## Secret scanning
 
