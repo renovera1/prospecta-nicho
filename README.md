@@ -1,89 +1,70 @@
-# ProspectaNicho
+# Prospecta Nicho
 
-Plataforma comercial da ProspectaNicho para venda de bases B2B segmentadas, pedidos de amostra, montagem de base personalizada e preparação do motor de dados empresariais.
+## Objetivo do projeto
 
-Repositório e publicação GitHub Pages esperados:
+Aplicação para prospecção B2B e organização estratégica de bases comerciais.
 
-- Repositório: `luscaarmstrong1/prospecta-nicho`
-- Site público: `https://luscaarmstrong1.github.io/prospecta-nicho/`
+## Problema que resolve
 
-## Stack
+Apoia organização de nichos, leads e dados comerciais para captação e análise operacional.
 
-- Next.js App Router
+## Demonstração visual
+
+![Screenshot desktop](docs/screenshots/home-desktop.png)
+
+![Screenshot mobile](docs/screenshots/home-mobile.png)
+
+## Tecnologias utilizadas
+
+- Next.js
+- React
 - TypeScript
-- Tailwind CSS
-- Zod para validacao server-side
-- Supabase como persistencia planejada
-- ClickHouse como camada analitica planejada
-- Worker Python para ingestao e exportacao RFB/CNPJ
+- Zod
+- React Hook Form
+- Framer Motion
+- Lucide React
+- Playwright
+- GitHub Pages
 
-## Rodar localmente
+## Recursos principais
+
+- Editor de bases B2B
+- Validações de formulário
+- Componentes React
+- Testes e scripts de checagem
+- Publicação estática
+
+## Acesso público
+
+GitHub Pages: https://luscaarmstrong1.github.io/prospecta-nicho/
+
+## Como executar localmente
+
+Pré-requisitos: Node.js compatível com o projeto e o gerenciador indicado pelo lockfile (`package-lock.json` ou `pnpm-lock.yaml`).
 
 ```bash
 npm install
-npm run dev
-```
-
-Para build de producao:
-
-```bash
 npm run build
-npm run start
 ```
 
-## Testes e validacao
+Quando houver scripts específicos no `package.json`, use também `npm run dev`, `npm run test`, `npm run lint` ou os comandos equivalentes documentados no próprio arquivo.
 
-```bash
-npm test
-npm run lint
-npm run build
-python -m pytest tests/test_rfb_privacy.py
-python -m workers.rfb_cnpj run --sample
-python -m workers.rfb_cnpj export --sample
-```
+## Estrutura do projeto
 
-## Variaveis de ambiente
+- `src/`, `app/` ou `apps/`: código da interface, conforme o framework do repositório.
+- `public/`: assets estáticos publicados com a aplicação.
+- `docs/screenshots/`: capturas reais da página publicada.
+- `.github/workflows/`: automações de build/deploy quando presentes.
+- `scripts/`: rotinas auxiliares de build, auditoria ou validação quando presentes.
 
-Copie `.env.example` para `.env.local` e configure os provedores reais antes de publicar:
+## Limitações e avisos técnicos
 
-- Site, WhatsApp, analytics e Turnstile
-- Supabase
-- Resend
-- Mercado Pago ou Asaas
-- Cloudflare R2
-- ClickHouse
-- Redis
-- pipeline RFB/CNPJ
-- token administrativo interno
+Este repositório é uma demonstração técnica ou produto em evolução. O conteúdo não substitui projeto executivo, estudo de conexão, validação regulatória, parecer técnico, proposta comercial definitiva ou análise jurídica. Funcionalidades, cálculos e textos devem ser revisados antes de uso profissional.
 
-Sem credenciais reais, os endpoints continuam seguros: retornam sucesso controlado para captura comercial quando possivel e bloqueiam recursos internos que dependem de segredo.
+## Privacidade e segurança
 
-## Areas principais
+Não inclua tokens, chaves, credenciais, dados pessoais sensíveis ou arquivos `.env` em commits. Em demonstrações públicas, use dados fictícios ou anonimizados. Quando houver `.env.example`, trate-o apenas como referência de configuração.
 
-- `/` pagina comercial principal
-- `/montar-minha-base` editor de base personalizada
-- `/para-quem-e` segmentos atendidos
-- `/contato` contato real da ProspectaNicho
-- `/produtos` catalogo comercial
-- `/pedido/[id]` acompanhamento de pedido
-- `/admin` painel tecnico protegido por configuracao
-- `/politica-de-supressao`
-- `/termos-de-entrega`
-- `/aviso-de-dados-empresariais`
+## Status
 
-`/blog` redireciona permanentemente para `/`, conforme reposicionamento comercial.
-
-## Dados e privacidade
-
-O projeto evita campos pessoais no catalogo padrao de bases e prepara o fluxo para dados empresariais publicos, supressao, auditoria, consentimento, rastreabilidade de exportacoes e revisao de privacidade antes de entregas.
-
-Documentacao complementar:
-
-- `docs/architecture.md`
-- `docs/data-pipeline.md`
-- `docs/security.md`
-- `docs/runbook-importacao.md`
-- `docs/runbook-exportacao.md`
-- `docs/production-checklist.md`
-- `infra/clickhouse/schema.sql`
-- `supabase/schema.sql`
+Produto digital em evolução.
