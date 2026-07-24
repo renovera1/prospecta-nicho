@@ -1,4 +1,4 @@
-import { ArrowRight, BadgeCheck, MessageCircle } from "lucide-react";
+import { ArrowRight, BadgeCheck, ClipboardCheck, CreditCard, Database, MessageCircle, ShieldCheck, Workflow } from "lucide-react";
 import Link from "next/link";
 import { BrandWatermark } from "@/components/BrandWatermark";
 import { ButtonLink } from "@/components/ButtonLink";
@@ -8,6 +8,7 @@ import { LeadDeliveryPreview } from "@/components/LeadDeliveryPreview";
 import { OpportunityShowcase } from "@/components/OpportunityShowcase";
 import { ProductSignalCard } from "@/components/ProductSignalCard";
 import { SampleConversionSection } from "@/components/SampleConversionSection";
+import { assetPath } from "@/lib/asset-path";
 import { buildQuickRequestHref, segmentCards } from "@/lib/segments";
 import { createWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
 import { homeFaq, isExternalHref, products } from "@/lib/site";
@@ -17,6 +18,29 @@ const impactCards = [
   "Estrutura pronta para rotina comercial",
   "Campos confirmados conforme disponibilidade",
   "Suporte humano para validar o recorte",
+];
+
+const commercialFlow = [
+  {
+    icon: Database,
+    title: "Recorte antes do volume",
+    text: "Você define nicho, região, período de abertura e perfil desejado antes de receber qualquer lista genérica.",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Validação assistida",
+    text: "A equipe revisa critérios, campos disponíveis e formato da entrega para reduzir retrabalho na prospecção.",
+  },
+  {
+    icon: Workflow,
+    title: "Pedido organizado",
+    text: "A solicitação fica estruturada com protocolo, resumo do recorte e caminho claro para refinamento ou WhatsApp.",
+  },
+  {
+    icon: CreditCard,
+    title: "Compra com contexto",
+    text: "Quando houver checkout configurado, a compra acontece depois da escolha do produto ou da validação do escopo.",
+  },
 ];
 
 export default function HomePage() {
@@ -53,6 +77,57 @@ export default function HomePage() {
       </section>
 
       <HomeBaseBuilderTeaser />
+
+      <section className="section conversion-system-section">
+        <div className="container-wide conversion-system-grid">
+          <div className="conversion-system-copy">
+            <p className="eyebrow">OPERAÇÃO GUIADA</p>
+            <h2 className="h2">Do nicho ao atendimento, cada etapa deixa a prospecção mais clara.</h2>
+            <p className="lead">
+              A ProspectaNicho não entrega apenas uma lista: ela organiza o pedido para sua equipe entender o público,
+              validar critérios e avançar com menos ruído comercial.
+            </p>
+            <div className="conversion-system-proof">
+              <ShieldCheck size={20} />
+              <span>Solicitação sem cobrança antecipada na base personalizada. Pagamento só entra quando o escopo comercial faz sentido.</span>
+            </div>
+            <div className="btn-row">
+              <ButtonLink href={buildQuickRequestHref("agencias", "guided-flow")} variant="teal">
+                Solicitar planilha rápida
+                <ArrowRight size={18} />
+              </ButtonLink>
+              <ButtonLink href="/como-funciona" variant="secondary">
+                Ver como funciona
+              </ButtonLink>
+            </div>
+          </div>
+          <div className="conversion-system-visual" aria-label="Fluxo comercial ilustrativo da ProspectaNicho">
+            <picture>
+              <source media="(max-width: 680px)" srcSet={assetPath("/assets/images/opportunity-showcase-mobile.webp")} />
+              <img
+                src={assetPath("/assets/images/opportunity-showcase.webp")}
+                alt="Equipe comercial analisando sinais e critérios de uma base B2B segmentada"
+              />
+            </picture>
+            <div className="conversion-system-overlay">
+              <span>Pedido validado</span>
+              <strong>Critérios claros antes da entrega</strong>
+            </div>
+          </div>
+        </div>
+        <div className="container-wide conversion-flow-grid">
+          {commercialFlow.map((item) => {
+            const Icon = item.icon;
+            return (
+              <article className="conversion-flow-card" key={item.title}>
+                <Icon size={23} />
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            );
+          })}
+        </div>
+      </section>
 
       <section className="section section--light">
         <div className="container-wide split-section">

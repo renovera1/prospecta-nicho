@@ -101,11 +101,17 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
       return;
     }
 
-    const response = await fetch("/api/custom-base-request", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...values, source: "base-builder" }),
-    });
+    let response: Response;
+    try {
+      response = await fetch("/api/custom-base-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, source: "base-builder" }),
+      });
+    } catch {
+      setSubmitError("Não foi possível conectar agora. Tente novamente em instantes ou chame pelo WhatsApp.");
+      return;
+    }
 
     if (!response.ok) {
       setSubmitError("Não foi possível enviar agora. Revise os campos obrigatórios e tente novamente.");
@@ -344,14 +350,14 @@ export function BaseBuilder({ initialSearch = "" }: Props) {
                   <input tabIndex={-1} autoComplete="off" style={{ display: "none" }} {...form.register("companySite")} />
                   <label className="consent field--full">
                     <input type="checkbox" {...form.register("consent")} />
-                    <span>Li e concordo com os Termos de Uso e a Politica de Privacidade.</span>
+                    <span>Li e concordo com os Termos de Uso e a Política de Privacidade.</span>
                   </label>
                   {form.formState.errors.consent ? <span className="error">{form.formState.errors.consent.message}</span> : null}
                 </div>
               </div>
             ) : null}
 
-            {submitError ? <p className="error">{submitError}</p> : null}
+            {submitError ? <p className="error" role="alert">{submitError}</p> : null}
             <div className="builder-actions">
               <button className="button button--secondary" type="button" onClick={previousStep} disabled={currentIndex === 0}>
                 Voltar

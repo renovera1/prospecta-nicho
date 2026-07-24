@@ -34,11 +34,18 @@ export function ContactForm() {
       return;
     }
 
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(Object.fromEntries(form.entries())),
-    });
+    let response: Response;
+    try {
+      response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(form.entries())),
+      });
+    } catch {
+      setStatus("error");
+      setMessage("Não foi possível conectar agora. Tente novamente em instantes ou chame pelo WhatsApp.");
+      return;
+    }
 
     if (!response.ok) {
       setStatus("error");
@@ -58,7 +65,7 @@ export function ContactForm() {
         <h2 className="h2">Mensagem recebida.</h2>
         <p className="lead">{message}</p>
         {href ? (
-          <a className="button button--teal" href={href} target="_blank" rel="noreferrer">
+          <a className="button button--teal" href={href} target="_blank" rel="noopener noreferrer">
             Falar sobre meu público
           </a>
         ) : null}
@@ -102,7 +109,11 @@ export function ContactForm() {
           <span>Li e concordo com os Termos de Uso e a Política de Privacidade.</span>
         </label>
       </div>
-      {message ? <p className={status === "error" ? "error" : "muted"}>{message}</p> : null}
+      {message ? (
+        <p className={status === "error" ? "error" : "muted"} role={status === "error" ? "alert" : "status"}>
+          {message}
+        </p>
+      ) : null}
       <button className="button button--primary" type="submit" disabled={status === "loading"} style={{ marginTop: 20 }}>
         <Send size={18} />
         {status === "loading" ? "Enviando..." : "Falar sobre meu público"}

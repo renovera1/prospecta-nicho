@@ -1,5 +1,6 @@
 import { strict as assert } from "node:assert";
 import test from "node:test";
+import { serializeJsonLd } from "../lib/structured-data.ts";
 import { assertProductionEnv, getMissingProductionEnv } from "../src/config/env.ts";
 import { maskValue, redactPayload } from "../src/lib/security/logger.ts";
 import { customRequestSchema } from "../src/schemas/custom-request.ts";
@@ -53,4 +54,10 @@ test("schema de solicitação rápida exige consentimento e período válido", (
     consent: false,
   });
   assert.equal(invalid.success, false);
+});
+
+test("serializeJsonLd escapa fechamento de script", () => {
+  const serialized = serializeJsonLd({ name: "</script><script>alert(1)</script>" });
+  assert.ok(!serialized.includes("</script>"));
+  assert.ok(serialized.includes("\\u003c/script>"));
 });

@@ -107,11 +107,18 @@ export function QuickPlanilhaRequestForm() {
       return;
     }
 
-    const response = await fetch("/api/custom-requests", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, source, idempotencyKey }),
-    });
+    let response: Response;
+    try {
+      response = await fetch("/api/custom-requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, source, idempotencyKey }),
+      });
+    } catch {
+      setIsSubmitting(false);
+      setError("Não foi possível conectar agora. Tente novamente em instantes ou chame pelo WhatsApp.");
+      return;
+    }
     const payload = (await response.json().catch(() => ({}))) as SuccessState & { ok?: boolean; message?: string };
 
     setIsSubmitting(false);
@@ -142,7 +149,7 @@ export function QuickPlanilhaRequestForm() {
             </div>
             <div className="btn-row">
               {success.whatsappUrl ? (
-                <a className="button button--teal" href={success.whatsappUrl} target="_blank" rel="noreferrer">
+                <a className="button button--teal" href={success.whatsappUrl} target="_blank" rel="noopener noreferrer">
                   <MessageCircle size={18} />
                   Falar pelo WhatsApp
                 </a>
@@ -278,7 +285,7 @@ export function QuickPlanilhaRequestForm() {
               <span>Li e concordo com os Termos de Uso e a Política de Privacidade.</span>
             </label>
           </div>
-          {error ? <p className="error">{error}</p> : null}
+          {error ? <p className="error" role="alert">{error}</p> : null}
           <div className="quick-request-actions">
             <button className="button button--primary" type="submit" disabled={isSubmitting || !form.consent}>
               <Send size={18} />

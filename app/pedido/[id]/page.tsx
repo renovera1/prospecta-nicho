@@ -26,7 +26,7 @@ export default async function PedidoPage({ params }: { params: Promise<{ id: str
           </p>
           <p>Status atual: aguardando configuração das integrações de produção.</p>
           {whatsapp ? (
-            <a className="button button--teal" href={whatsapp} target="_blank" rel="noreferrer">
+            <a className="button button--teal" href={whatsapp} target="_blank" rel="noopener noreferrer">
               Falar sobre meu público
             </a>
           ) : null}

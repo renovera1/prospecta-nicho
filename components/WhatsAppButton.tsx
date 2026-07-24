@@ -10,7 +10,7 @@ export function WhatsAppButton() {
       className="button button--teal whatsapp"
       href={href}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       aria-label="Falar com a ProspectaNicho no WhatsApp"
       data-tooltip="Falar sobre meu público"
     >

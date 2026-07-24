@@ -52,11 +52,17 @@ export function LeadForm({ mode }: Props) {
 
     const endpoint =
       mode === "sample" ? "/api/free-sample-request" : mode === "custom" ? "/api/custom-base-request" : "/api/contact";
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    let response: Response;
+    try {
+      response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+    } catch {
+      setSubmitError("Não foi possível conectar agora. Tente novamente em instantes ou chame pelo WhatsApp.");
+      return;
+    }
 
     if (!response.ok) {
       setSubmitError("Não foi possível enviar agora. Confira os campos e tente novamente.");
@@ -82,7 +88,7 @@ export function LeadForm({ mode }: Props) {
           className="button button--teal"
           href={href}
           target={external ? "_blank" : undefined}
-          rel={external ? "noreferrer" : undefined}
+          rel={external ? "noopener noreferrer" : undefined}
         >
           {site.whatsapp ? "Abrir WhatsApp" : "Voltar ao contato"}
         </a>
@@ -153,7 +159,7 @@ export function LeadForm({ mode }: Props) {
           {errors.consent ? <span className="error">{errors.consent.message}</span> : null}
         </div>
       </div>
-      {submitError ? <p className="error">{submitError}</p> : null}
+      {submitError ? <p className="error" role="alert">{submitError}</p> : null}
       <button className="button button--primary" type="submit" disabled={isSubmitting} style={{ marginTop: 20 }}>
         <Send size={18} />
         Enviar solicitação

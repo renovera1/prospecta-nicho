@@ -20,7 +20,7 @@ export function EditorSuccess({ data }: { data: BaseBuilderData }) {
             abra a conversa no WhatsApp com o resumo preenchido.
           </p>
           {href ? (
-            <a className="button button--teal" href={href} target="_blank" rel="noreferrer">
+            <a className="button button--teal" href={href} target="_blank" rel="noopener noreferrer">
               <MessageCircle size={18} />
               Falar sobre meu recorte no WhatsApp
             </a>

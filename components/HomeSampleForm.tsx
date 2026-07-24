@@ -34,19 +34,26 @@ export function HomeSampleForm() {
       return;
     }
 
-    const response = await fetch("/api/free-sample-request", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: form.get("name"),
-        company: form.get("company") || undefined,
-        whatsapp: form.get("whatsapp"),
-        niche: form.get("niche"),
-        city: form.get("city"),
-        consent: true,
-        source: "home-short-sample",
-      }),
-    });
+    let response: Response;
+    try {
+      response = await fetch("/api/free-sample-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.get("name"),
+          company: form.get("company") || undefined,
+          whatsapp: form.get("whatsapp"),
+          niche: form.get("niche"),
+          city: form.get("city"),
+          consent: true,
+          source: "home-short-sample",
+        }),
+      });
+    } catch {
+      setError("Não foi possível conectar agora. Tente novamente em instantes ou chame pelo WhatsApp.");
+      setLoading(false);
+      return;
+    }
 
     if (!response.ok) {
       setError("Não foi possível enviar agora. Confira os campos e tente novamente.");
@@ -75,7 +82,7 @@ export function HomeSampleForm() {
           className="button button--primary"
           href={finalHref}
           target={external ? "_blank" : undefined}
-          rel={external ? "noreferrer" : undefined}
+          rel={external ? "noopener noreferrer" : undefined}
         >
           {site.whatsapp ? "Falar sobre meu público" : "Ver bases a partir de R$ 147"}
         </a>
@@ -105,7 +112,7 @@ export function HomeSampleForm() {
         Empresa opcional
         <input name="company" />
       </label>
-      {error ? <span className="error">{error}</span> : null}
+      {error ? <span className="error" role="alert">{error}</span> : null}
       <button className="button button--primary" type="submit" disabled={loading}>
         {loading ? "Enviando..." : "Quero receber minha amostra grátis agora"}
         <ArrowRight size={18} />

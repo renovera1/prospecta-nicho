@@ -3,6 +3,7 @@ import { Manrope, Sora } from "next/font/google";
 import { AppShell } from "@/components/AppShell";
 import { assetPath } from "@/lib/asset-path";
 import { site } from "@/lib/site";
+import { serializeJsonLd } from "@/lib/structured-data";
 import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
@@ -49,7 +50,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(organization) }}
         />
         <AppShell>{children}</AppShell>
       </body>

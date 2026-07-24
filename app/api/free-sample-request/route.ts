@@ -1,7 +1,15 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { persistLead, sendTransactionalEmail, writeAuditLog } from "@/lib/server/integrations";
-import { hasHoneypot, rateLimit, sanitizePhone, sanitizeText, verifyTurnstileIfConfigured } from "@/lib/server/security";
+import {
+  hasHoneypot,
+  parseJsonBody,
+  rateLimit,
+  requireTrustedOrigin,
+  sanitizePhone,
+  sanitizeText,
+  verifyTurnstileIfConfigured,
+} from "@/lib/server/security";
 
 const sampleRequestSchema = z.object({
   name: z.string().min(2).max(120),
@@ -21,7 +29,13 @@ export async function POST(request: Request) {
   const limited = rateLimit(request, "sample", 5, 60_000);
   if (limited) return limited;
 
-  const raw = (await request.json()) as Record<string, unknown>;
+  const forbiddenOrigin = requireTrustedOrigin(request);
+  if (forbiddenOrigin) return forbiddenOrigin;
+
+  const json = await parseJsonBody(request, 12_288);
+  if (!json.ok) return json.response;
+
+  const raw = json.body;
   if (hasHoneypot(raw)) return NextResponse.json({ ok: true, message: "Amostra solicitada." });
 
   const parsed = sampleRequestSchema.safeParse(raw);

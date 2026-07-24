@@ -2,7 +2,15 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { builderSchema } from "@/lib/editor-schema";
 import { persistLead, sendTransactionalEmail, writeAuditLog } from "@/lib/server/integrations";
-import { hasHoneypot, rateLimit, sanitizePhone, sanitizeText, verifyTurnstileIfConfigured } from "@/lib/server/security";
+import {
+  hasHoneypot,
+  parseJsonBody,
+  rateLimit,
+  requireTrustedOrigin,
+  sanitizePhone,
+  sanitizeText,
+  verifyTurnstileIfConfigured,
+} from "@/lib/server/security";
 
 const legacySchema = z.object({
   name: z.string().min(2),
@@ -25,7 +33,13 @@ export async function POST(request: Request) {
   const limited = rateLimit(request, "custom-base", 6, 60_000);
   if (limited) return limited;
 
-  const body = (await request.json()) as Record<string, unknown>;
+  const forbiddenOrigin = requireTrustedOrigin(request);
+  if (forbiddenOrigin) return forbiddenOrigin;
+
+  const json = await parseJsonBody(request, 24_576);
+  if (!json.ok) return json.response;
+
+  const body = json.body;
   if (hasHoneypot(body)) return NextResponse.json({ ok: true, message: "Solicitação recebida." });
 
   const parsed = builderSchema.safeParse(body);
